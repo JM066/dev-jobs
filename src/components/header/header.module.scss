@@ -1,0 +1,26 @@
+.Nav {
+  background: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: 1px solid #1a0f7c;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  & .Menu {
+    width: 40px;
+    height: 40px;
+  }
+  & .AboutLink,
+  .ContactLink {
+    text-decoration: none;
+    color: black;
+    padding: 20px 20px;
+    &:hover {
+      background-color: #e6e9eb;
+    }
+  }
+}
