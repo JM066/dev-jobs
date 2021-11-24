@@ -12,16 +12,16 @@ interface SignInProps {
 }
 
 function Home({ currentUser }: any) {
-  const [loginUser, setLoginUser] = useState<{}>();
+  // const [loginUser, setLoginUser] = useState<{}>();
 
-  useEffect(() => {
-    console.log("loginUser", loginUser);
-  }, [loginUser]);
+  // useEffect(() => {
+  //   console.log("loginUser", loginUser);
+  // }, [loginUser]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value } = e.target;
-    setLoginUser({ [name]: value });
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  //   const { name, value } = e.target;
+  //   setLoginUser({ [name]: value });
+  // };
 
   const handleSignOut = () => {
     console.log("clicked");
@@ -30,7 +30,7 @@ function Home({ currentUser }: any) {
   return (
     <div className={styles.Home}>
       <h1>Home Mina Home</h1>
-      <FormInput name="email" label="enter email" handleChange={handleChange} />
+      {/* <FormInput name="email" label="enter email" handleChange={handleChange} /> */}
       {currentUser ? (
         <Button isGoogleSignIn onClick={handleSignOut}>
           Google SignOut

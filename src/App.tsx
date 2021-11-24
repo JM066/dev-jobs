@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import firebase from "./firebase/firebase.utils";
 
 import Home from "./pages/home/home";
@@ -10,30 +10,51 @@ import Contact from "./pages/contact/contact";
 import Header from "./components/header/header";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [loggin, setLogging] = useState<boolean>(true);
 
-  const onAuthStateChanged = () => {
-    return auth.onAuthStateChanged((user) => {
-      if (user) {
-        setLogging(false);
-        setCurrentUser(user);
-        console.log("user", user);
-      } else {
-        console.log("the user is not logged in");
-      }
-    });
+  const unsubscribe = (isUnsubscribed: boolean) => {
+    if (isUnsubscribed) {
+      setCurrentUser(null);
+      return null;
+    } else {
+      return auth.onAuthStateChanged(async (userAuth) => {
+        if (userAuth) {
+          const userRef = await createUserProfileDocument(userAuth);
+          userRef?.onSnapshot((snapShot) => {
+            console.log("snapshot.data", snapShot);
+            setCurrentUser({
+              id: snapShot.id,
+              ...snapShot.data(),
+            });
+          });
+        }
+      });
+    }
   };
+  // const onAuthStateChanged = () => {
+  //   return auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       setLogging(false);
+  //       setCurrentUser(user);
+  //       console.log("user", user);
+  //     } else {
+  //       console.log("the user is not logged in");
+  //     }
+  //   });
+  // };
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged();
+    unsubscribe(false);
+    // const unsubscribe = onAuthStateChanged();
 
     return () => {
-      unsubscribe();
+      unsubscribe(true);
     };
   }, []);
   useEffect(() => {
     console.log("current", currentUser);
   }, [currentUser]);
+
   return (
     <div className="Home">
       <Header />
