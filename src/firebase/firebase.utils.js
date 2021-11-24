@@ -1,7 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 const config = {
   apiKey: "AIzaSyAWFSDmhMUDyxxpCok_MZoIYHUv1m_yzDA",
