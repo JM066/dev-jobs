@@ -1,33 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { signInWithGoogle } from "src/firebase/firebase.utils";
-import { auth } from "../../firebase/firebase.utils";
 
+import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 
-function SignInAndOut({ currentUser }: any) {
-  const [user, setUser] = useState(currentUser);
+interface SignInAndOutProps {
+  email?: string;
+  password?: string;
+}
+function SignInAndOut() {
+  const [user, setUser] = useState<SignInAndOutProps>({});
 
-  useEffect(() => {
-    setUser(currentUser);
-  }, [currentUser]);
-
-  const handleSignOut = () => {
-    console.log("currentUser.userAuth ", currentUser.userAuth);
-    auth.signOut();
-    setUser(null);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
   };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event?.target;
+    setUser({
+      [name]: value,
+    });
+  };
+
   return (
     <div>
-      {user ? (
-        <Button isGoogleSignIn onClick={handleSignOut}>
-          Google SignOut
-        </Button>
-      ) : (
-        <Button isGoogleSignIn onClick={signInWithGoogle}>
-          Sign In
-        </Button>
-      )}
+      <Button isGoogleSignIn onClick={signInWithGoogle}>
+        SignIn with Google
+      </Button>
+      <Button onClick={() => setUser({})}>Google SignOut</Button>
+
+      <Button type="submit"> Sign in </Button>
+      <form onSubmit={(event) => handleSubmit(event)}>
+        <FormInput
+          type="email"
+          name="email"
+          value={user.email}
+          handleChange={handleChange}
+          label="email"
+          required
+        />
+        <FormInput
+          type="password"
+          name="password"
+          value={user.password}
+          handleChange={handleChange}
+          label="password"
+          required
+        />
+      </form>
     </div>
   );
 }

@@ -7,8 +7,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   isGoogleSignIn?: boolean;
 }
-function Button({ round, children, isGoogleSignIn, ...props }: ButtonProps) {
-  // console.log("props", props);
+function Button({
+  round,
+  children,
+  isGoogleSignIn,
+
+  ...props
+}: ButtonProps) {
   return (
     <button
       className={classNames(styles.Button, {
