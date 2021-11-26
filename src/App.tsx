@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./pages/home/home";
 import About from "./pages/about/about";
 import Contact from "./pages/contact/contact";
-
+import SignInAndOut from "./pages/sign-in-and-out/sign-in-and-out";
 import Header from "./components/header/header";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
@@ -42,6 +42,7 @@ function App() {
       <Header currentUser={currentUser} />
       <Switch>
         <Route exact path="/home" component={Home} />
+        <Route exact path="/sign-in-and-out" component={SignInAndOut} />
         <Route exact path="/about" component={About} />
         <Route exact path="/contact" component={Contact} />
       </Switch>

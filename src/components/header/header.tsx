@@ -15,13 +15,15 @@ function Header({ currentUser, click }: any) {
   return (
     <div className={styles.Nav}>
       {!user ? (
-        <Link to="/home" className={styles.ContactLink}>
+        <Link to="/sign-in-and-out" className={styles.ContactLink}>
           Sign-In
         </Link>
       ) : (
         <Button onClick={() => setUser(null)}>SignOut</Button>
       )}
-
+      <Link to="/home" className={styles.AboutLink}>
+        About Me
+      </Link>
       <Link to="/about" className={styles.AboutLink}>
         About Me
       </Link>
