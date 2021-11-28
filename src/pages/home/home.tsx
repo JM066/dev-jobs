@@ -1,5 +1,5 @@
+import React from "react";
 import styles from "./home.module.scss";
-import SignInAndOut from "../sign-in-and-out/sign-in-and-out";
 
 function Home() {
   return (

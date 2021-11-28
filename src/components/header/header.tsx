@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+// import { User } from "../../types/types";
 
 import Button from "../button/button";
 
 import styles from "./header.module.scss";
 
-function Header({ currentUser, click }: any) {
-  const [user, setUser] = useState(currentUser);
+function Header() {
+  const [user, setUser] = useState({ email: "", password: "" });
 
-  useEffect(() => {
-    setUser(currentUser);
-  }, [currentUser]);
+  // useEffect(() => {
+  //   setUser(currentUser);
+  // }, [currentUser]);
 
   return (
     <div className={styles.Nav}>
-      {!user ? (
+      {!user.email && !user.password ? (
         <Link to="/sign-in-and-out" className={styles.ContactLink}>
           Sign-In
         </Link>
       ) : (
-        <Button onClick={() => setUser(null)}>SignOut</Button>
+        <Button noStyle onClick={() => setUser({ email: "", password: "" })}>
+          SignOut
+        </Button>
       )}
       <Link to="/home" className={styles.AboutLink}>
         About Me

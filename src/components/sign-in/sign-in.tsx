@@ -1,34 +1,42 @@
 import React, { useState, useEffect } from "react";
+import { User } from "../../types/types";
 
 import { auth, signInWithGoogle } from "src/firebase/firebase.utils";
 
+import firebase from "firebase/compat/app";
+
 import FormInput from "../../components/form-input/form-input";
 import Button from "../../components/button/button";
+import SignUp from "../sign-up/sign-up";
 
-interface SignInProps {
-  email: string;
-  password: string;
-}
 function SignIn() {
-  const [user, setUser] = useState<SignInProps>({ email: "", password: "" });
+  const [user, setUser] = useState<User>({ email: "", password: "" });
+  const [message, setMessage] = useState<string>("");
 
-  // useEffect(() => {
-  //   console.log("user", user);
-  // }, [user]);
+  useEffect(() => {
+    console.log("user", user);
+  }, [user]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { email, password } = user;
-    console.log("email", email, "pass", password);
+
     try {
       await auth.signInWithEmailAndPassword(email, password);
       setUser({ email: "", password: "" });
     } catch (error) {
-      console.log(error);
+      if ((error as Error).name === "FirebaseError") {
+        const firebaseError = error as firebase.FirebaseError;
+        const errorMessage = firebaseError.message;
+        const message = errorMessage.split(" ");
+        message.shift();
+        message.pop();
+        setMessage(message.join(" "));
+      }
     }
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event?.target;
+    const { name, value } = event.target;
     setUser((prevState) => ({
       ...prevState,
       [name]: value,
@@ -58,6 +66,13 @@ function SignIn() {
         <Button isGoogleSignIn onClick={signInWithGoogle}>
           SignIn with Google
         </Button>
+        <p>{message}</p>
+        {message ? (
+          <div>
+            <p>Let me sign up!</p>
+            <SignUp />
+          </div>
+        ) : null}
       </form>
     </div>
   );
