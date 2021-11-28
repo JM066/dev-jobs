@@ -12,6 +12,7 @@ import SignUp from "../sign-up/sign-up";
 function SignIn() {
   const [user, setUser] = useState<User>({ email: "", password: "" });
   const [message, setMessage] = useState<string>("");
+  const [showSignUp, setShowSignUp] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("user", user);
@@ -44,7 +45,9 @@ function SignIn() {
     }));
   };
 
-  const handleSignUp = () => {};
+  const handleSignUp = () => {
+    setShowSignUp(true);
+  };
 
   return (
     <div>
@@ -70,11 +73,8 @@ function SignIn() {
           SignIn with Google
         </Button>
         <p>{message}</p>
-        {message ? (
-          <Button onClick={handleSignUp}>Let me sign up!</Button>
-        ) : (
-          <p>No thanks!</p>
-        )}
+        {message && <Button onClick={handleSignUp}>Let me sign up!</Button>}
+        {showSignUp && <SignUp />}
       </form>
     </div>
   );

@@ -25,7 +25,7 @@ function Header() {
         </Button>
       )}
       <Link to="/home" className={styles.AboutLink}>
-        About Me
+        Home
       </Link>
       <Link to="/about" className={styles.AboutLink}>
         About Me
