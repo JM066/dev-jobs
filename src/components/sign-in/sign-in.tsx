@@ -24,6 +24,7 @@ function SignIn() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       setUser({ email: "", password: "" });
+      setMessage("");
     } catch (error) {
       if ((error as Error).name === "FirebaseError") {
         const firebaseError = error as firebase.FirebaseError;
@@ -42,6 +43,8 @@ function SignIn() {
       [name]: value,
     }));
   };
+
+  const handleSignUp = () => {};
 
   return (
     <div>
@@ -68,11 +71,10 @@ function SignIn() {
         </Button>
         <p>{message}</p>
         {message ? (
-          <div>
-            <p>Let me sign up!</p>
-            <SignUp />
-          </div>
-        ) : null}
+          <Button onClick={handleSignUp}>Let me sign up!</Button>
+        ) : (
+          <p>No thanks!</p>
+        )}
       </form>
     </div>
   );
