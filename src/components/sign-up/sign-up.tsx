@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { InputGroup } from "@chakra-ui/react";
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
 import Button from "../button/button";
@@ -47,7 +48,7 @@ const SignUp = () => {
     }));
   };
   return (
-    <div>
+    <InputGroup size="md">
       <form onSubmit={handleSubmit}>
         <FormInput
           type="text"
@@ -83,7 +84,7 @@ const SignUp = () => {
         />
         <Button type="submit">Sign Up</Button>
       </form>
-    </div>
+    </InputGroup>
   );
 };
 

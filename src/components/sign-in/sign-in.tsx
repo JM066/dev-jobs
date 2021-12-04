@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { User } from "../../types/types";
+import { InputGroup } from "@chakra-ui/react";
 
 import { auth, signInWithGoogle } from "src/firebase/firebase.utils";
 
@@ -7,12 +8,10 @@ import firebase from "firebase/compat/app";
 
 import FormInput from "../../components/form-input/form-input";
 import Button from "../../components/button/button";
-import SignUp from "../sign-up/sign-up";
 
 function SignIn() {
   const [user, setUser] = useState<User>({ email: "", password: "" });
-  const [message, setMessage] = useState<string>("");
-  const [showSignUp, setShowSignUp] = useState<boolean>(false);
+  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
     console.log("user", user);
@@ -45,12 +44,8 @@ function SignIn() {
     }));
   };
 
-  const handleSignUp = () => {
-    setShowSignUp(true);
-  };
-
   return (
-    <div>
+    <InputGroup size="md">
       <form onSubmit={(event) => handleSubmit(event)}>
         <FormInput
           type="email"
@@ -73,10 +68,8 @@ function SignIn() {
           SignIn with Google
         </Button>
         <p>{message}</p>
-        {message && <Button onClick={handleSignUp}>Let me sign up!</Button>}
-        {showSignUp && <SignUp />}
       </form>
-    </div>
+    </InputGroup>
   );
 }
 
