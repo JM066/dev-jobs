@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { User } from "./types/types";
+// import { User } from "./types/types";
 
 import Home from "./pages/home/home";
 import About from "./pages/about/about";
@@ -12,10 +12,18 @@ import Header from "./components/header/header";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
+export interface IUserData {
+  id: string;
+  displayName: string;
+  email: string;
+  createdAt: Date | null;
+}
 function App() {
-  const [currentUser, setCurrentUser] = useState<User>({
+  const [currentUser, setCurrentUser] = useState<IUserData | null>({
+    id: "",
+    displayName: "",
     email: "",
-    password: "",
+    createdAt: new Date(),
   });
 
   useEffect(() => {
@@ -27,15 +35,15 @@ function App() {
       console.log("userAuth", userAuth);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
-        userRef?.onSnapshot((snapShot: any) => {
-          console.log("snapShot", snapShot);
+        userRef?.onSnapshot((snapShot) => {
+          const userInfo = snapShot.data() as IUserData;
+          console.log("snapShot", userInfo);
           setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
+            ...userInfo,
           });
         });
       } else {
-        setCurrentUser({ email: "", password: "" });
+        setCurrentUser(userAuth);
       }
     });
 
@@ -47,9 +55,9 @@ function App() {
 
   return (
     <div className="Home">
-      <Header />
+      <Header currentUser={currentUser} />
       <Switch>
-        <Route exact path="/home" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route exact path="/sign-in-and-out" component={SignInAndOut} />
         <Route exact path="/about" component={About} />
         <Route exact path="/contact" component={Contact} />

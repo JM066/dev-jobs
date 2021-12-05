@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { Button } from "@chakra-ui/react";
 import styles from "./button.module.scss";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -9,7 +10,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isGoogleSignIn?: boolean;
   noStyle?: boolean;
 }
-function Button({
+function CustomButton({
   round,
   children,
   isGoogleSignIn,
@@ -24,7 +25,9 @@ function Button({
     );
   }
   return (
-    <button
+    <Button
+      colorScheme="teal"
+      variant="solid"
       className={classNames(styles.Button, {
         [styles.round]: round,
         [styles.isGoogleSignIn]: isGoogleSignIn,
@@ -32,8 +35,8 @@ function Button({
       {...props}
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
-export default Button;
+export default CustomButton;

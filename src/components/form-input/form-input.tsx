@@ -1,19 +1,21 @@
-import React, { InputHTMLAttributes } from "react";
-import { Input } from "@chakra-ui/react";
+import React from "react";
+import { Input, FormControl, FormLabel } from "@chakra-ui/react";
 
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  name?: string;
-
-  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+interface Props {
+  label: string;
+  type: string;
+  name: string;
+  value: string | undefined;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  required: boolean;
 }
-
-function FormInput({ handleChange, label }: FormInputProps) {
+function FormInput({ ...props }: Props) {
+  const { label } = props;
   return (
-    <div>
-      {label ?? <label>{label}</label>}
-      <Input pr="4.5rem" type={label} onChange={handleChange} />
-    </div>
+    <FormControl id={label} isRequired>
+      <FormLabel>{label}</FormLabel>
+      <Input {...props} />
+    </FormControl>
   );
 }
 export default FormInput;

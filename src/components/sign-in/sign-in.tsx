@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { User } from "../../types/types";
-import { InputGroup } from "@chakra-ui/react";
+
+import { ButtonGroup, Stack, Box } from "@chakra-ui/react";
 
 import { auth, signInWithGoogle } from "src/firebase/firebase.utils";
 
 import firebase from "firebase/compat/app";
 
-import FormInput from "../../components/form-input/form-input";
-import Button from "../../components/button/button";
+import CustomButton from "../button/custom-button";
+import FormInput from "../form-input/form-input";
+
+import styles from "./sign-in.module.scss";
 
 function SignIn() {
   const [user, setUser] = useState<User>({ email: "", password: "" });
+
   const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,6 +42,7 @@ function SignIn() {
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
     setUser((prevState) => ({
       ...prevState,
       [name]: value,
@@ -45,31 +50,48 @@ function SignIn() {
   };
 
   return (
-    <InputGroup size="md">
+    <Box
+      p={10}
+      maxW="lg"
+      shadow="md"
+      borderWidth="1px"
+      flex="1"
+      borderRadius="md"
+    >
       <form onSubmit={(event) => handleSubmit(event)}>
-        <FormInput
-          type="email"
-          name="email"
-          value={user.email}
-          handleChange={handleChange}
-          label="email"
-          required
-        />
-        <FormInput
-          type="password"
-          name="password"
-          value={user.password}
-          handleChange={handleChange}
-          label="password"
-          required
-        />
-        <Button type="submit"> Sign in </Button>
-        <Button isGoogleSignIn onClick={signInWithGoogle}>
-          SignIn with Google
-        </Button>
+        <Stack spacing="14px">
+          <FormInput
+            type="email"
+            name="email"
+            value={user.email}
+            onChange={handleChange}
+            label="email"
+            required
+          />
+          <FormInput
+            type="password"
+            name="password"
+            value={user.password}
+            onChange={handleChange}
+            label="password"
+            required
+          />
+        </Stack>
+
+        <ButtonGroup
+          variant="outline"
+          spacing="10"
+          className={styles.SignInButtons}
+        >
+          <CustomButton type="submit"> Sign in </CustomButton>
+          <CustomButton isGoogleSignIn onClick={signInWithGoogle}>
+            SignIn with Google
+          </CustomButton>
+        </ButtonGroup>
+
         <p>{message}</p>
       </form>
-    </InputGroup>
+    </Box>
   );
 }
 

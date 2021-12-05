@@ -1,23 +1,29 @@
-import React, { useState } from "react";
-import { InputGroup } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+
+import { Stack, Box } from "@chakra-ui/react";
+
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
-import Button from "../button/button";
+import CustomButton from "../button/custom-button";
 import FormInput from "../form-input/form-input";
 
 import { User } from "../../types/types";
+import styles from "./sign-up.module.scss";
 
 const SignUp = () => {
-  const [user, setUser] = useState<User>({
+  const [currentUser, setCurrentUser] = useState<User>({
     displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  useEffect(() => {
+    console.log("currentUser", currentUser);
+  }, [currentUser]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { displayName, email, password, confirmPassword } = user;
+    const { displayName, email, password, confirmPassword } = currentUser;
     if (password !== confirmPassword) {
       alert("password do not match");
       return;
@@ -29,7 +35,7 @@ const SignUp = () => {
         password
       );
       await createUserProfileDocument(user, { displayName });
-      setUser({
+      setCurrentUser({
         displayName: "",
         email: "",
         password: "",
@@ -42,49 +48,61 @@ const SignUp = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setUser((prevState) => ({
+    setCurrentUser((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
   return (
-    <InputGroup size="md">
+    <Box
+      p={10}
+      maxW="lg"
+      shadow="md"
+      borderWidth="1px"
+      flex="1"
+      borderRadius="md"
+    >
       <form onSubmit={handleSubmit}>
-        <FormInput
-          type="text"
-          name="displayName"
-          value={user.displayName}
-          handleChange={handleChange}
-          label="Display Name"
-          required
-        />
-        <FormInput
-          type="email"
-          name="email"
-          value={user.email}
-          handleChange={handleChange}
-          label="email"
-          required
-        />
-        <FormInput
-          type="password"
-          name="password"
-          value={user.password}
-          handleChange={handleChange}
-          label="password"
-          required
-        />
-        <FormInput
-          type="password"
-          name="confirmPassword"
-          value={user.confirmPassword}
-          handleChange={handleChange}
-          label="Confirm Password"
-          required
-        />
-        <Button type="submit">Sign Up</Button>
+        <Stack spacing="14px">
+          <FormInput
+            type="text"
+            name="displayName"
+            value={currentUser.displayName}
+            onChange={handleChange}
+            label="Display Name"
+            required
+          />
+          <FormInput
+            type="email"
+            name="email"
+            value={currentUser.email}
+            onChange={handleChange}
+            label="email"
+            required
+          />
+          <FormInput
+            type="password"
+            name="password"
+            value={currentUser.password}
+            onChange={handleChange}
+            label="password"
+            required
+          />
+          <FormInput
+            type="password"
+            name="confirmPassword"
+            value={currentUser.confirmPassword}
+            onChange={handleChange}
+            label="Confirm Password"
+            required
+          />
+        </Stack>
+
+        <CustomButton type="submit" className={styles.SignUpButton}>
+          Sign Up
+        </CustomButton>
       </form>
-    </InputGroup>
+    </Box>
   );
 };
 

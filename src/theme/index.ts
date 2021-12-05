@@ -21,7 +21,6 @@ const theme = extendTheme({
       // 1. We can update the base styles
       baseStyle: {
         fontWeight: "bold", // Normally, it is "semibold"
-        border: "1px solid red",
       },
 
       // 2. We can add a new button size or extend existing

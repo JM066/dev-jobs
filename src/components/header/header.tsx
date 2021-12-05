@@ -1,28 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { IUserData } from "src/App";
 // import { User } from "../../types/types";
 
-import Button from "../button/button";
+import CustomButton from "../button/custom-button";
 
 import styles from "./header.module.scss";
 
-function Header() {
-  const [user, setUser] = useState({ email: "", password: "" });
+function Header({ currentUser }: { currentUser: IUserData | null }) {
+  const [user, setUser] = useState<IUserData | null>({
+    id: "",
+    displayName: "",
+    email: "",
+    createdAt: new Date(),
+  });
 
-  // useEffect(() => {
-  //   setUser(currentUser);
-  // }, [currentUser]);
+  useEffect(() => {
+    setUser(currentUser);
+  }, [currentUser]);
 
   return (
     <div className={styles.Nav}>
-      {!user.email && !user.password ? (
+      {!user?.id && !user?.email ? (
         <Link to="/sign-in-and-out" className={styles.ContactLink}>
           Sign-In
         </Link>
       ) : (
-        <Button noStyle onClick={() => setUser({ email: "", password: "" })}>
+        <CustomButton
+          noStyle
+          onClick={() =>
+            setUser({ id: "", email: "", displayName: "", createdAt: null })
+          }
+        >
           SignOut
-        </Button>
+        </CustomButton>
       )}
       <Link to="/home" className={styles.AboutLink}>
         Home
