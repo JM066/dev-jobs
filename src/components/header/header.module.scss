@@ -10,15 +10,11 @@
     flex-direction: column;
   }
 
-  & .Menu {
-    width: 40px;
-    height: 40px;
-  }
-  & .AboutLink,
-  .ContactLink {
+  & .Link {
     text-decoration: none;
     color: black;
     padding: 20px 20px;
+
     &:hover {
       background-color: #e6e9eb;
     }

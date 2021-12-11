@@ -4,7 +4,6 @@ import { User } from "../../types/types";
 import { ButtonGroup, Stack, Box } from "@chakra-ui/react";
 
 import { auth, signInWithGoogle } from "src/firebase/firebase.utils";
-
 import firebase from "firebase/compat/app";
 
 import CustomButton from "../button/custom-button";
@@ -63,13 +62,16 @@ function SignIn() {
           <FormInput
             type="email"
             name="email"
+            id="email"
             value={user.email}
             onChange={handleChange}
             label="email"
             required
           />
+
           <FormInput
             type="password"
+            id="password"
             name="password"
             value={user.password}
             onChange={handleChange}

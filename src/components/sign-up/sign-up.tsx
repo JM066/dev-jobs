@@ -17,6 +17,7 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
+
   useEffect(() => {
     console.log("currentUser", currentUser);
   }, [currentUser]);
@@ -67,6 +68,7 @@ const SignUp = () => {
           <FormInput
             type="text"
             name="displayName"
+            id="displayName"
             value={currentUser.displayName}
             onChange={handleChange}
             label="Display Name"
@@ -74,6 +76,7 @@ const SignUp = () => {
           />
           <FormInput
             type="email"
+            id="email"
             name="email"
             value={currentUser.email}
             onChange={handleChange}
@@ -83,6 +86,7 @@ const SignUp = () => {
           <FormInput
             type="password"
             name="password"
+            id="password"
             value={currentUser.password}
             onChange={handleChange}
             label="password"
@@ -91,6 +95,7 @@ const SignUp = () => {
           <FormInput
             type="password"
             name="confirmPassword"
+            id="confirmPassword"
             value={currentUser.confirmPassword}
             onChange={handleChange}
             label="Confirm Password"

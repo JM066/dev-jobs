@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { IUserData } from "src/App";
-// import { User } from "../../types/types";
+import { UserData } from "../../types/types";
 
 import CustomButton from "../button/custom-button";
 
 import styles from "./header.module.scss";
 
-function Header({ currentUser }: { currentUser: IUserData | null }) {
-  const [user, setUser] = useState<IUserData | null>({
+function Header({ currentUser }: { currentUser: UserData | null }) {
+  const [user, setUser] = useState<UserData | null>({
     id: "",
     displayName: "",
     email: "",
@@ -22,11 +21,12 @@ function Header({ currentUser }: { currentUser: IUserData | null }) {
   return (
     <div className={styles.Nav}>
       {!user?.id && !user?.email ? (
-        <Link to="/sign-in-and-out" className={styles.ContactLink}>
+        <Link to="/sign-in-and-out" className={styles.Link}>
           Sign-In
         </Link>
       ) : (
         <CustomButton
+          className={styles.Link}
           noStyle
           onClick={() =>
             setUser({ id: "", email: "", displayName: "", createdAt: null })
@@ -35,14 +35,14 @@ function Header({ currentUser }: { currentUser: IUserData | null }) {
           SignOut
         </CustomButton>
       )}
-      <Link to="/home" className={styles.AboutLink}>
-        Home
+      <Link to="/findjobs" className={styles.Link}>
+        Find Jobs
       </Link>
-      <Link to="/about" className={styles.AboutLink}>
-        About Me
+      <Link to="/postjobs" className={styles.Link}>
+        Post Jobs
       </Link>
-      <Link to="/contact" className={styles.ContactLink}>
-        Contact Me
+      <Link to="/myapplications" className={styles.Link}>
+        My Applications
       </Link>
     </div>
   );
