@@ -14,6 +14,7 @@ export type UserData = {
 };
 
 export type JobType = {
+  id: string;
   companyName: string;
   address: string;
   employees: number;

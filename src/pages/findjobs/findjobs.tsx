@@ -7,9 +7,10 @@ import {
   Heading,
   Spinner,
   Badge,
+  UnorderedList,
+  ListItem,
 } from "@chakra-ui/react";
 import { JobType } from "../../types/types";
-// import styles from "./findjobs.module.scss";
 
 function FindJobs() {
   const [isLoading, setIsLoading] = useState(true);
@@ -49,9 +50,9 @@ function FindJobs() {
     </section>;
   }
   return (
-    // <div className={styles.FindJobs}>
     <Stack direction={["column", "row"]} w="100%" p={10} spacing={8}>
       {jobs.map((job, id) => {
+        const responsibilityList = job.responsibilities.split(".");
         return (
           <Box
             key={id}
@@ -69,14 +70,21 @@ function FindJobs() {
               <Text> {job.address}</Text>
               <Text>{job.aboutJob}</Text>
               <Divider orientation="horizontal" />
-              <Text>{job.responsibilities}</Text>
+              <UnorderedList>
+                {responsibilityList.map((responsibility, i: number) => {
+                  return (
+                    responsibility.length > 1 && (
+                      <ListItem key={i} p={2}>{`${responsibility}.`}</ListItem>
+                    )
+                  );
+                })}
+              </UnorderedList>
               <Text>{job.preferences}</Text>
             </Stack>
           </Box>
         );
       })}
     </Stack>
-    // </div>
   );
 }
 export default FindJobs;
