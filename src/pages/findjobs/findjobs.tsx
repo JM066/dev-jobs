@@ -1,11 +1,23 @@
 import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Stack,
+  Text,
+  Divider,
+  Heading,
+  Spinner,
+  Badge,
+} from "@chakra-ui/react";
 import { JobType } from "../../types/types";
-import styles from "./findjobs.module.scss";
+// import styles from "./findjobs.module.scss";
 
 function FindJobs() {
   const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState<JobType[]>([]);
 
+  useEffect(() => {
+    console.log("jobs", jobs);
+  }, [jobs]);
   useEffect(() => {
     setIsLoading(true);
     try {
@@ -25,7 +37,6 @@ function FindJobs() {
 
           setIsLoading(false);
           setJobs(jobList);
-          console.log("jobs", jobs);
         });
     } catch (error) {
       console.log(error);
@@ -34,13 +45,38 @@ function FindJobs() {
 
   if (isLoading) {
     <section>
-      <p>Loading</p>
+      <Spinner />
     </section>;
   }
   return (
-    <div className={styles.FindJobs}>
-      <h1>FindJobs</h1>
-    </div>
+    // <div className={styles.FindJobs}>
+    <Stack direction={["column", "row"]} w="100%" p={10} spacing={8}>
+      {jobs.map((job, id) => {
+        return (
+          <Box
+            key={id}
+            maxW="lg"
+            w="100%"
+            borderWidth="1px"
+            borderadius="lg"
+            p="6"
+          >
+            <Heading as="h3" size="lg">
+              {job.companyName}
+            </Heading>
+            <Badge colorScheme="green">{job.title}</Badge>
+            <Stack spacing={8}>
+              <Text> {job.address}</Text>
+              <Text>{job.aboutJob}</Text>
+              <Divider orientation="horizontal" />
+              <Text>{job.responsibilities}</Text>
+              <Text>{job.preferences}</Text>
+            </Stack>
+          </Box>
+        );
+      })}
+    </Stack>
+    // </div>
   );
 }
 export default FindJobs;
