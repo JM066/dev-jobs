@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Stack,
-  Text,
-  Divider,
-  Heading,
-  Spinner,
-  Badge,
-  UnorderedList,
-  ListItem,
-} from "@chakra-ui/react";
-import { JobType } from "../../types/types";
+import { Stack, Spinner, Box } from "@chakra-ui/react";
+
+import { JobPost } from "../../types/types";
+
+import JobItem from "./jobItem/jobitem";
 
 function FindJobs() {
   const [isLoading, setIsLoading] = useState(true);
-  const [jobs, setJobs] = useState<JobType[]>([]);
+  const [jobs, setJobs] = useState<JobPost[]>([]);
 
   useEffect(() => {
     console.log("jobs", jobs);
@@ -29,6 +22,7 @@ function FindJobs() {
         .then((data) => {
           const jobList = [];
           for (const key in data) {
+            console.log("key", key);
             const job = {
               id: key,
               ...data[key],
@@ -51,36 +45,17 @@ function FindJobs() {
   }
   return (
     <Stack direction={["column", "row"]} w="100%" p={10} spacing={8}>
-      {jobs.map((job, id) => {
-        const responsibilityList = job.responsibilities.split(".");
+      {jobs.map((job) => {
         return (
           <Box
-            key={id}
+            key={job.id}
             maxW="lg"
             w="100%"
             borderWidth="1px"
             borderadius="lg"
             p="6"
           >
-            <Heading as="h3" size="lg">
-              {job.companyName}
-            </Heading>
-            <Badge colorScheme="green">{job.title}</Badge>
-            <Stack spacing={8}>
-              <Text> {job.address}</Text>
-              <Text>{job.aboutJob}</Text>
-              <Divider orientation="horizontal" />
-              <UnorderedList>
-                {responsibilityList.map((responsibility, i: number) => {
-                  return (
-                    responsibility.length > 1 && (
-                      <ListItem key={i} p={2}>{`${responsibility}.`}</ListItem>
-                    )
-                  );
-                })}
-              </UnorderedList>
-              <Text>{job.preferences}</Text>
-            </Stack>
+            <JobItem key={job.id} post={job} />
           </Box>
         );
       })}

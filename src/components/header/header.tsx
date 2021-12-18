@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { Badge } from "@chakra-ui/react";
+
 import { UserData } from "../../types/types";
 
 import CustomButton from "../button/custom-button";
+
+import SavedPostContext from "../../store/save-post";
 
 import styles from "./header.module.scss";
 
@@ -13,6 +17,8 @@ function Header({ currentUser }: { currentUser: UserData | null }) {
     email: "",
     createdAt: new Date(),
   });
+  const jobContext = useContext(SavedPostContext);
+  const total = jobContext?.totalPost;
 
   useEffect(() => {
     setUser(currentUser);
@@ -41,8 +47,11 @@ function Header({ currentUser }: { currentUser: UserData | null }) {
       <Link to="/postjobs" className={styles.Link}>
         Post Jobs
       </Link>
-      <Link to="/myapplications" className={styles.Link}>
-        My Applications
+      <Link to="/mylist" className={styles.Link}>
+        My List
+        <Badge colorScheme="purple" ml={2}>
+          {total}
+        </Badge>
       </Link>
     </div>
   );

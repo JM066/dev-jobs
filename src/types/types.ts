@@ -12,8 +12,17 @@ export type UserData = {
   email: string;
   createdAt: Date | null;
 };
-
-export type JobType = {
+export type Job = {
+  companyName: string;
+  address: string;
+  employees: number;
+  title: string;
+  type: string;
+  aboutJob?: string;
+  responsibilities: string;
+  preferences: string;
+};
+export type JobPost = {
   id: string;
   companyName: string;
   address: string;

@@ -4,14 +4,17 @@ import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/provider";
 import "./index.css";
 import App from "./App";
+import { SavedPostContextProvider } from "./store/save-post";
 import theme from "./theme";
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <SavedPostContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SavedPostContextProvider>
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root")

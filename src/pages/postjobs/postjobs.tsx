@@ -19,7 +19,7 @@ import FormInput from "../../components/form-input/form-input";
 import CustomButton from "../../components/button/custom-button";
 import FormTextArea from "../../components/form-textarea/form-textarea";
 
-import { JobType } from "../../types/types";
+import { Job } from "../../types/types";
 
 function PostJobs() {
   const [companyName, setCompanyName] = useState<string>("");
@@ -54,7 +54,7 @@ function PostJobs() {
     };
     onAddJob(jobPost);
   };
-  const onAddJob = (jobPost: JobType) => {
+  const onAddJob = (jobPost: Job) => {
     try {
       fetch(
         "https://my-project-c37fd-default-rtdb.firebaseio.com/jobpost.json",
