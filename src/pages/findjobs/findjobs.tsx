@@ -1,10 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Stack, Spinner, Box } from "@chakra-ui/react";
+import { Stack, Spinner, Box, CheckboxGroup, HStack } from "@chakra-ui/react";
 
 import { JobPost } from "../../types/types";
 
+import CustomCheckBox from "../../components/custom-checkbox/custom-checkbox";
+
 import JobItem from "./jobItem/jobitem";
 
+function PositionCheckBox() {
+  const POSITIONS = [
+    { id: "build-engineer", title: "Build Engineer" },
+    { id: "release-manager", title: "Release Manager" },
+    { id: "product-manager", title: "Product Manager" },
+    { id: "frontend", title: "Front End Developer" },
+    { id: "backend", title: "Back End Developer " },
+    { id: "security-engineer", title: "Security Engineer" },
+  ];
+  return (
+    <CheckboxGroup colorScheme="green" defaultValue={["build-engineer"]}>
+      <HStack spacing="24px">
+        <Box w="100%" p={4}>
+          {POSITIONS.map((position, i: number) => (
+            <CustomCheckBox key={i} items={position} />
+          ))}
+        </Box>
+      </HStack>
+    </CheckboxGroup>
+  );
+}
 function FindJobs() {
   const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState<JobPost[]>([]);
@@ -44,21 +67,13 @@ function FindJobs() {
     </section>;
   }
   return (
-    <Stack direction={["column", "row"]} w="100%" p={10} spacing={8}>
-      {jobs.map((job) => {
-        return (
-          <Box
-            key={job.id}
-            maxW="lg"
-            w="100%"
-            borderWidth="1px"
-            borderadius="lg"
-            p="6"
-          >
-            <JobItem key={job.id} post={job} />
-          </Box>
-        );
-      })}
+    <Stack>
+      {PositionCheckBox()}
+      <Stack direction={["column"]} p={10} spacing={8}>
+        {jobs.map((job) => {
+          return <JobItem key={job.id} post={job} />;
+        })}
+      </Stack>
     </Stack>
   );
 }

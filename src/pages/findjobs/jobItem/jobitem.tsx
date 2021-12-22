@@ -55,7 +55,7 @@ function JobItem({
   };
   const responsibilityList = responsibilities.split(".");
   return (
-    <>
+    <Box w="100%" borderWidth="1px" borderadius="lg" p="6">
       {showTitle && (
         <Box flex="1" textAlign="left">
           <Heading as="h3" size="sm">
@@ -85,7 +85,7 @@ function JobItem({
           {itemIsSaved ? "Remove from MyList" : "Save in MyList"}
         </Button>
       </Stack>
-    </>
+    </Box>
   );
 }
 export default JobItem;

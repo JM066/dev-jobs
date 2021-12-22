@@ -1,5 +1,5 @@
 import { Props } from "framer-motion/types/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import { JobPost } from "../types/types";
 
@@ -21,6 +21,15 @@ const SavedPostContext = createContext<contextProps | undefined>(defaultState);
 
 export function SavedPostContextProvider(props: Props) {
   const [saved, setSaved] = useState<JobPost[]>([]);
+  useEffect(() => {
+    const savedPosts = JSON.parse(localStorage.getItem("savedPosts") || "{}");
+    if (savedPosts) {
+      setSaved(savedPosts);
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("savedPosts", JSON.stringify(saved));
+  }, [saved]);
 
   const addSavedHandler = (jobPost: JobPost) => {
     setSaved((prev) => prev.concat(jobPost));
