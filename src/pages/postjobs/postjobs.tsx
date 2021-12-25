@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
+
 import {
   Stack,
   Box,
@@ -30,6 +31,7 @@ function PostJobs() {
   const [aboutJob, setAboutJob] = useState<string>("");
   const [responsibilities, setResponsibilities] = useState<string>("");
   const [preferences, setPreferences] = useState<string>("");
+  const preferencesRef = useRef();
   const titles = [
     "Build Engineer",
     "Release Manager",
@@ -162,8 +164,9 @@ function PostJobs() {
             onChange={(e) => setPreferences(e.currentTarget.value)}
             label="Preferences"
             required={false}
+            // ref={preferencesRef}
           />
-          <CustomButton type="submit"> Sign in </CustomButton>
+          <CustomButton type="submit"> Post </CustomButton>
         </form>
       </Stack>
     </Box>
