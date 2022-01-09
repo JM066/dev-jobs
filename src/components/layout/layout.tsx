@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Header from "../header/header";
+
 import { UserData } from "../../types/types";
 
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";

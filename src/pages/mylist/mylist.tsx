@@ -10,7 +10,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
-import JobItem from "../findjobs/jobItem/jobitem";
+import JobItem from "../../components/jobItem/jobitem";
 
 import SavedPostContext from "../../store/save-post";
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import {
@@ -31,7 +31,7 @@ function PostJobs() {
   const [aboutJob, setAboutJob] = useState<string>("");
   const [responsibilities, setResponsibilities] = useState<string>("");
   const [preferences, setPreferences] = useState<string>("");
-  const preferencesRef = useRef();
+  // const preferencesRef = useRef();
   const titles = [
     "Build Engineer",
     "Release Manager",

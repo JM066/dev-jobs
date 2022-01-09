@@ -11,8 +11,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-import SavedPostContext from "../../../store/save-post";
-import { JobPost } from "../../../types/types";
+import SavedPostContext from "../../store/save-post";
+import { JobPost } from "../../types/types";
 
 interface Props {
   post: JobPost;

@@ -9,12 +9,12 @@ interface Props {
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   required: boolean;
 }
-function FormTextArea(props: Props, ref?: React.Ref<HTMLTextAreaElement>) {
+function FormTextArea(props: Props) {
   const { id, label } = props;
   return (
     <FormControl id={id} required={true}>
       <Text mb="8px">{label}</Text>
-      <Textarea ref={ref} {...props} />
+      <Textarea {...props} />
     </FormControl>
   );
 }

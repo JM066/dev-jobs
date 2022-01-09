@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Switch, Route } from "react-router-dom";
 import { Stack, Spinner, Box, CheckboxGroup, HStack } from "@chakra-ui/react";
 
 import { JobPost } from "../../types/types";
 
 import CustomCheckBox from "../../components/custom-checkbox/custom-checkbox";
+import SearchBar from "../../components/search-bar/search-bar";
 
-import JobItem from "./jobItem/jobitem";
+import JobItem from "../../components/jobItem/jobitem";
 
 function PositionCheckBox() {
   const POSITIONS = [
@@ -19,7 +21,7 @@ function PositionCheckBox() {
   return (
     <CheckboxGroup colorScheme="green" defaultValue={["build-engineer"]}>
       <HStack spacing="24px">
-        <Box w="100%" p={4}>
+        <Box w="100%" pl={10}>
           {POSITIONS.map((position, i: number) => (
             <CustomCheckBox key={i} items={position} />
           ))}
@@ -68,10 +70,17 @@ function FindJobs() {
   }
   return (
     <Stack>
+      <SearchBar searchData={"search"} />
       {PositionCheckBox()}
       <Stack direction={["column"]} p={10} spacing={8}>
         {jobs.map((job) => {
-          return <JobItem key={job.id} post={job} />;
+          return (
+            <Switch key={job.id}>
+              <Route path={`/findjobs/:${job.companyName}`}>
+                <JobItem post={job} />
+              </Route>
+            </Switch>
+          );
         })}
       </Stack>
     </Stack>
