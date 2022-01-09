@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 import { Input, HStack, InputRightAddon, InputGroup } from "@chakra-ui/react";
 interface Props {
@@ -10,11 +10,14 @@ function SearchBar({ searchData }: Props) {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const history = useHistory();
+  const { pathname } = useLocation();
+  // const { job_name } = useParams<Record<string, string | undefined>>();
+
   const handleSearchInput = () => {
     const searchId = searchInputRef.current?.value;
-
-    history.push(`findjobs/${searchId}`);
-    // console.log("searchInputRef", searchInputRef.current?.value);
+    if (searchId) {
+      history.replace(`${pathname}/${searchId}`);
+    }
   };
 
   return (

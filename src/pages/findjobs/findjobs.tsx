@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+
 import { Stack, Spinner, Box, CheckboxGroup, HStack } from "@chakra-ui/react";
 
 import { JobPost } from "../../types/types";
@@ -74,13 +74,7 @@ function FindJobs() {
       {PositionCheckBox()}
       <Stack direction={["column"]} p={10} spacing={8}>
         {jobs.map((job) => {
-          return (
-            <Switch key={job.id}>
-              <Route path={`/findjobs/:${job.companyName}`}>
-                <JobItem post={job} />
-              </Route>
-            </Switch>
-          );
+          return <JobItem key={job.id} post={job} />;
         })}
       </Stack>
     </Stack>

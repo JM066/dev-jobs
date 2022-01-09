@@ -4,6 +4,7 @@ import { Spinner } from "@chakra-ui/react";
 import Layout from "./components/layout/layout";
 import PostJobs from "./pages/postjobs/postjobs";
 import MyList from "./pages/mylist/mylist";
+import Job from "./pages/findjobs/job/job";
 import SignInAndOut from "./pages/sign-in-and-out/sign-in-and-out";
 const FindJobs = lazy(() => import("./pages/findjobs/findjobs"));
 
@@ -22,7 +23,8 @@ function App() {
         }
       >
         <Switch>
-          <Route path="/findjobs" component={FindJobs} />
+          <Route exact path="/findjobs" component={FindJobs} />
+          <Route path="/findjobs/:job_name" component={Job} />
           <Route path="/postjobs" component={PostJobs} />
           <Route path="/sign-in-and-out" component={SignInAndOut} />
           <Route path="/mylist" component={MyList} />
