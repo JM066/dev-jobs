@@ -51,7 +51,8 @@ function SignIn() {
   return (
     <Box
       p={10}
-      maxW="lg"
+      maxW="500px"
+      minW="300px"
       shadow="md"
       borderWidth="1px"
       flex="1"
@@ -82,7 +83,7 @@ function SignIn() {
 
         <ButtonGroup
           variant="outline"
-          spacing="10"
+          spacing="2"
           className={styles.SignInButtons}
         >
           <CustomButton type="submit"> Sign in </CustomButton>

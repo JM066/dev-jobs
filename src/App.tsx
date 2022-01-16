@@ -6,6 +6,7 @@ import PostJobs from "./pages/postjobs/postjobs";
 import MyList from "./pages/mylist/mylist";
 import Job from "./pages/findjobs/job/job";
 import SignInAndOut from "./pages/sign-in-and-out/sign-in-and-out";
+
 const FindJobs = lazy(() => import("./pages/findjobs/findjobs"));
 
 function App() {

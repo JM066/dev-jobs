@@ -22,7 +22,7 @@ function SearchBar({ searchData }: Props) {
 
   return (
     <HStack>
-      <InputGroup size="sm" p={10}>
+      <InputGroup size="sm">
         <Input
           ref={searchInputRef}
           placeholder="Search by company or job title"
