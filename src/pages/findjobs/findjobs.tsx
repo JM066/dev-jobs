@@ -30,58 +30,85 @@ function PositionCheckBox() {
     </CheckboxGroup>
   );
 }
-function FindJobs() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [jobs, setJobs] = useState<JobPost[]>([]);
-  const [jobDetail, setJobDetail] = useState<JobPost>();
-  useEffect(() => {
-    console.log("jobs", jobs);
-  }, [jobs]);
+
+type CompanyName = string;
+type JobType = { jobs: JobPost[] };
+
+function FindJobs({ ...props }: JobType) {
+  const { jobs } = props;
+
+  const [search, setSearch] = useState<string>("");
+  const [matches, setMatches] = useState<CompanyName[]>([]);
+
+  const [filteredJobs, setFilteredJobs] = useState<JobPost[]>(jobs);
+  const [jobDetail, setJobDetail] = useState<JobPost>(jobs[0]);
 
   useEffect(() => {
-    setIsLoading(true);
-    try {
-      fetch("https://my-project-c37fd-default-rtdb.firebaseio.com/jobpost.json")
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          const jobList = [];
-          for (const key in data) {
-            console.log("key", key);
-            const job = {
-              id: key,
-              ...data[key],
-            };
-            jobList.push(job);
+    const filtered: CompanyName[] = [];
+    if (search.length > 0) {
+      jobs.forEach((job) => {
+        const regex = new RegExp(search, "gi");
+        if (job.companyName.toLowerCase().match(regex)) {
+          return filtered.push(job.companyName);
+        }
+        if (job.title.toLowerCase().match(regex)) {
+          if (!filtered.includes(job.title)) {
+            filtered.push(job.title);
           }
-
-          setIsLoading(false);
-          setJobs(jobList);
-          setJobDetail(jobList[0]);
-        });
-    } catch (error) {
-      console.log(error);
+        }
+      });
     }
-  }, []);
+
+    setMatches(filtered);
+  }, [search]);
 
   const showDetail = (post: JobPost) => {
     setJobDetail(post);
   };
-  if (isLoading) {
+
+  const handleSearchInput = (searchItem: string) => {
+    setSearch(searchItem);
+  };
+
+  const selectSearchItem = (selectItem: string) => {
+    setSearch(selectItem);
+  };
+
+  if (!jobs) {
     <section>
       <Spinner />
     </section>;
   }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const item = search.toLowerCase();
+    const filtered = jobs.filter(
+      (job) =>
+        job.companyName.toLowerCase() === item ||
+        job.title.toLowerCase() === item
+    );
+
+    setFilteredJobs(filtered);
+    setJobDetail(filtered[0]);
+    setSearch("");
+  };
+
   return (
     <Stack p={5}>
       <Box>
-        <SearchBar searchData={"search"} />
+        <SearchBar
+          search={search}
+          matches={matches}
+          handleSearchInput={handleSearchInput}
+          handleSubmit={handleSubmit}
+          selectSearchItem={selectSearchItem}
+        />
         <Stack p={5}>{PositionCheckBox()}</Stack>
       </Box>
       <HStack spacing={5} align="start" justify="start">
         <Stack w={"40%"}>
-          {jobs.map((job) => {
+          {filteredJobs.map((job) => {
             return (
               <JobItemPreview key={job.id} post={job} showDetail={showDetail} />
             );

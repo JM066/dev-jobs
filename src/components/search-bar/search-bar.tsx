@@ -1,37 +1,82 @@
-import React, { useRef } from "react";
+import React from "react";
 
-import { useHistory, useLocation } from "react-router-dom";
+import { Input, Stack, Button, HStack, Box, Text } from "@chakra-ui/react";
+// import { JobPost } from "../../types/types";
+// import CustomButton from "../button/custom-button";
+
 import { BiSearch } from "react-icons/bi";
-import { Input, HStack, InputRightAddon, InputGroup } from "@chakra-ui/react";
+type CompanyName = string;
 interface Props {
-  searchData: string;
+  search: string;
+  matches: CompanyName[];
+  handleSearchInput: (searchItem: string) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  selectSearchItem: (selectItem: string) => void;
 }
-function SearchBar({ searchData }: Props) {
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const history = useHistory();
-  const { pathname } = useLocation();
-  // const { job_name } = useParams<Record<string, string | undefined>>();
+function SearchBar({
+  search,
+  matches,
+  handleSearchInput,
+  handleSubmit,
+  selectSearchItem,
+}: Props) {
+  // const [search, setSearch] = useState<string>("");
+  // const [matches, setMatches] = useState<CompanyName[]>([]);
+  // useEffect(() => {
+  //   const filtered: CompanyName[] = [];
+  //   if (search.length > 0) {
+  //     jobs.forEach((job) => {
+  //       const regex = new RegExp(search, "gi");
+  //       if (job.companyName.toLowerCase().match(regex)) {
+  //         return filtered.push(job.companyName);
+  //       }
+  //       if (job.title.toLowerCase().match(regex)) {
+  //         if (!filtered.includes(job.title)) {
+  //           filtered.push(job.title);
+  //         }
+  //       }
+  //     });
+  //   }
+  //   setMatches(filtered);
+  // }, [search]);
 
-  const handleSearchInput = () => {
-    const searchId = searchInputRef.current?.value;
-    if (searchId) {
-      history.replace(`${pathname}/${searchId}`);
-    }
-  };
+  // useEffect(() => {
+  //   console.log("matches", matches);
+  // }, [matches]);
+  // const selectSearchItem = (item: string) => {
+  //   setSearch(item);
+  // };
 
+  // const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   event.preventDefault();
+  //   setMatches([]);
+  //   handleSubmit();
+  // };
   return (
-    <HStack>
-      <InputGroup size="sm">
-        <Input
-          ref={searchInputRef}
-          placeholder="Search by company or job title"
-        />
-        <InputRightAddon>
-          <BiSearch onClick={handleSearchInput} />
-        </InputRightAddon>
-      </InputGroup>
-    </HStack>
+    <Stack>
+      <form onSubmit={handleSubmit}>
+        <HStack>
+          <Input
+            value={search}
+            onChange={(event) => handleSearchInput(event.target.value)}
+            placeholder="Search by company or job title"
+          />
+          <Button size="md" type="submit">
+            <BiSearch />
+          </Button>
+        </HStack>
+        {matches.length > 0 && (
+          <Box borderWidth="1px" p={2} mt={1}>
+            {matches?.map((item, index) => (
+              <Text key={index} onClick={() => selectSearchItem(item)}>
+                {item}
+              </Text>
+            ))}
+          </Box>
+        )}
+      </form>
+    </Stack>
   );
 }
 export default SearchBar;

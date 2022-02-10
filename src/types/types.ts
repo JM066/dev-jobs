@@ -12,6 +12,7 @@ export type UserData = {
   email: string;
   createdAt: Date | null;
 };
+
 export type Job = {
   companyName: string;
   address: string;
@@ -22,6 +23,7 @@ export type Job = {
   responsibilities: string;
   preferences: string;
 };
+
 export type JobPost = {
   id: string;
   companyName: string;

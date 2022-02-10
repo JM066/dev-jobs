@@ -1,5 +1,6 @@
 import React from "react";
-function job() {
+
+function Job() {
   return <div>Job</div>;
 }
-export default job;
+export default Job;

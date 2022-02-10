@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { User } from "../../types/types";
 
 import { ButtonGroup, Stack, Box } from "@chakra-ui/react";
@@ -13,12 +13,7 @@ import styles from "./sign-in.module.scss";
 
 function SignIn() {
   const [user, setUser] = useState<User>({ email: "", password: "" });
-
   const [message, setMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log("user", user);
-  }, [user]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
