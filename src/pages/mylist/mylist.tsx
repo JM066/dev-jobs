@@ -36,7 +36,7 @@ function MyList() {
         My Job List
       </Heading>
       {jobPosts?.map((job) => (
-        <Accordion key={job.id} defaultIndex={[0]} m={2} allowMultiple>
+        <Accordion key={job.id} m={2} allowMultiple>
           <AccordionItem>
             <h2>
               <AccordionButton>
