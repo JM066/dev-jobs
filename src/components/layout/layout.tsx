@@ -29,7 +29,6 @@ function Layout({ children }: LayoutProps) {
         const userRef = await createUserProfileDocument(userAuth);
         userRef?.onSnapshot((snapShot) => {
           const userInfo = snapShot.data() as UserData;
-          console.log("snapShot", userInfo);
           setCurrentUser({
             ...userInfo,
           });
