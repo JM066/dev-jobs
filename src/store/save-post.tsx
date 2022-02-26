@@ -7,22 +7,24 @@ interface contextProps {
   savedPost: JobPost[];
   totalPost: number;
   addPost: (jobPost: JobPost) => void;
-  removePost: (joId: string) => void;
-  isItemSaved: (jobId: string) => void;
+  removePost: (jobId: string) => void;
+  isItemSaved: (jobId: string) => boolean;
 }
 const defaultState = {
   savedPost: [],
   totalPost: 0,
-  addPost: (jobPost: JobPost) => console.log(jobPost),
-  removePost: (joId: string) => console.log(joId),
-  isItemSaved: (jobId: string) => console.log(jobId),
+  addPost: () => [],
+  removePost: () => [],
+  isItemSaved: () => false,
 };
-const SavedPostContext = createContext<contextProps | undefined>(defaultState);
+const SavedPostContext = createContext<contextProps>(defaultState);
 
 export function SavedPostContextProvider(props: Props) {
   const [saved, setSaved] = useState<JobPost[]>([]);
+
+  console.log("saved ", saved);
   useEffect(() => {
-    const savedPosts = JSON.parse(localStorage.getItem("savedPosts") || "{}");
+    const savedPosts = JSON.parse(localStorage.getItem("savedPosts") || "[]");
     if (savedPosts) {
       setSaved(savedPosts);
     }
@@ -40,7 +42,7 @@ export function SavedPostContextProvider(props: Props) {
     });
   };
   const isItemSavedHandler = (jobId: string) => {
-    return saved.some((post) => post.id === jobId);
+    return saved?.some((post) => post.id === jobId);
   };
   const context = {
     savedPost: saved,
