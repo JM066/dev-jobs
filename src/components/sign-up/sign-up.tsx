@@ -57,8 +57,7 @@ const SignUp = () => {
   return (
     <Box
       p={10}
-      maxW="500px"
-      minW="300px"
+      h="100%"
       shadow="md"
       borderWidth="1px"
       flex="1"

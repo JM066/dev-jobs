@@ -21,7 +21,12 @@ function PositionCheckBox() {
   return (
     <CheckboxGroup colorScheme="green" defaultValue={["build-engineer"]}>
       <HStack spacing="24px">
-        <Box w="100%" pl={10}>
+        <Box
+          w="100%"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           {POSITIONS.map((position, i: number) => (
             <CustomCheckBox key={i} items={position} />
           ))}

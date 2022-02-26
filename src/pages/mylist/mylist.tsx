@@ -31,7 +31,7 @@ function MyList() {
     );
   }
   return (
-    <div>
+    <Box p={5} w={"100%"}>
       <Heading as="h4" size="md" m={3}>
         My Job List
       </Heading>
@@ -55,7 +55,7 @@ function MyList() {
           </AccordionItem>
         </Accordion>
       ))}
-    </div>
+    </Box>
   );
 }
 export default MyList;

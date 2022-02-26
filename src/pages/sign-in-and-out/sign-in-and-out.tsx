@@ -6,11 +6,18 @@ import SignUp from "../../components/sign-up/sign-up";
 
 function SignInAndOut() {
   return (
-    <Flex p={10} w={"100%"} wrap="wrap" justify={"center"}>
-      <Stack p={5}>
+    <Flex
+      p={10}
+      w="100%"
+      flexWrap="wrap"
+      height="100%"
+      display="flex"
+      justifyContent="space-around"
+    >
+      <Stack w={"45%"} h={"100%"}>
         <SignIn />
       </Stack>
-      <Stack p={5}>
+      <Stack w={"45%"} h={"100%"}>
         <SignUp />
       </Stack>
     </Flex>

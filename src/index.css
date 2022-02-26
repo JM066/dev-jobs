@@ -1,6 +1,7 @@
 body {
   font-family: "Open Sans Condensed";
   width: 100%;
+  height: 100vh;
 }
 
 * {

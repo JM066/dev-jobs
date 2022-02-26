@@ -9,8 +9,6 @@ import firebase from "firebase/compat/app";
 import CustomButton from "../button/custom-button";
 import FormInput from "../form-input/form-input";
 
-import styles from "./sign-in.module.scss";
-
 function SignIn() {
   const [user, setUser] = useState<User>({ email: "", password: "" });
   const [message, setMessage] = useState<string | null>(null);
@@ -46,15 +44,14 @@ function SignIn() {
   return (
     <Box
       p={10}
-      maxW="500px"
-      minW="300px"
+      h="100%"
       shadow="md"
       borderWidth="1px"
       flex="1"
       borderRadius="md"
     >
       <form onSubmit={(event) => handleSubmit(event)}>
-        <Stack spacing="14px">
+        <Stack spacing="15px">
           <FormInput
             type="email"
             name="email"
@@ -74,18 +71,13 @@ function SignIn() {
             label="password"
             required
           />
+          <ButtonGroup variant="outline" spacing="3">
+            <CustomButton type="submit"> Sign in </CustomButton>
+            <CustomButton isGoogleSignIn onClick={signInWithGoogle}>
+              SignIn with Google
+            </CustomButton>
+          </ButtonGroup>
         </Stack>
-
-        <ButtonGroup
-          variant="outline"
-          spacing="2"
-          className={styles.SignInButtons}
-        >
-          <CustomButton type="submit"> Sign in </CustomButton>
-          <CustomButton isGoogleSignIn onClick={signInWithGoogle}>
-            SignIn with Google
-          </CustomButton>
-        </ButtonGroup>
 
         <p>{message}</p>
       </form>

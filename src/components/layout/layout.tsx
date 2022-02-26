@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { Stack } from "@chakra-ui/react";
 import Header from "../header/header";
 
 import { UserData } from "../../types/types";
@@ -45,10 +45,10 @@ function Layout({ children }: LayoutProps) {
   }, []);
 
   return (
-    <div>
+    <Stack h={"100%"}>
       <Header currentUser={currentUser} />
       {children}
-    </div>
+    </Stack>
   );
 }
 
