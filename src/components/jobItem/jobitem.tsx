@@ -6,11 +6,8 @@ import {
   Heading,
   Badge,
   Button,
-  UnorderedList,
-  ListItem,
   Box,
 } from "@chakra-ui/react";
-
 import SavedPostContext from "../../store/save-post";
 import { JobPost } from "../../types/types";
 
@@ -53,7 +50,7 @@ function JobItem({
       });
     }
   };
-  const responsibilityList = responsibilities.split(".");
+
   return (
     <Box w="100%" borderWidth="1px" borderadius="lg" p="6">
       {showTitle && (
@@ -69,15 +66,9 @@ function JobItem({
         <Text> {address}</Text>
         <Text>{aboutJob}</Text>
         <Divider orientation="horizontal" />
-        <UnorderedList>
-          {responsibilityList.map((responsibility, i: number) => {
-            return (
-              responsibility.length > 1 && (
-                <ListItem key={i} p={2}>{`${responsibility}.`}</ListItem>
-              )
-            );
-          })}
-        </UnorderedList>
+        <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
+          {responsibilities}
+        </div>
         <Text>{preferences}</Text>
       </Stack>
       <Stack p={5} align="flex-end">
