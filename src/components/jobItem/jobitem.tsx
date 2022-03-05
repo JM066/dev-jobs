@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+
 import {
   Stack,
   Text,
@@ -69,7 +70,7 @@ function JobItem({
         <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
           {responsibilities}
         </div>
-        <Text>{preferences}</Text>
+        /<Text>{preferences}</Text>
       </Stack>
       <Stack p={5} align="flex-end">
         <Button onClick={toggleSavedStatusHandler}>
