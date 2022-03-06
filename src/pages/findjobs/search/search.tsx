@@ -1,53 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { Stack, Spinner, Box, Text } from "@chakra-ui/react";
 
-import { Stack, Spinner, Box, CheckboxGroup, HStack } from "@chakra-ui/react";
+import Filter from "../filter/filter";
 
+import SearchBar from "../../../components/search-bar/search-bar";
 import { JobPost } from "../../../types/types";
 
-import CustomCheckBox from "../../../components/custom-checkbox/custom-checkbox";
-import SearchBar from "../../../components/search-bar/search-bar";
-import JobItemPreview from "../../../components/jobItem-preview/jobItem-preview";
-import JobItem from "../../../components/jobItem/jobitem";
+type JobType = {
+  jobs: JobPost[];
+  setFilteredJobs: React.Dispatch<React.SetStateAction<JobPost[]>>;
+  setJobDetail: React.Dispatch<React.SetStateAction<JobPost>>;
+};
 
-function PositionCheckBox() {
-  const POSITIONS = [
-    { id: "build-engineer", title: "Build Engineer" },
-    { id: "release-manager", title: "Release Manager" },
-    { id: "product-manager", title: "Product Manager" },
-    { id: "frontend", title: "Front End Developer" },
-    { id: "backend", title: "Back End Developer " },
-    { id: "security-engineer", title: "Security Engineer" },
-  ];
-  return (
-    <CheckboxGroup colorScheme="green" defaultValue={["build-engineer"]}>
-      <HStack spacing="24px">
-        <Box
-          w="100%"
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          {POSITIONS.map((position, i: number) => (
-            <CustomCheckBox key={i} items={position} />
-          ))}
-        </Box>
-      </HStack>
-    </CheckboxGroup>
-  );
-}
-
-type CompanyName = string;
-type JobType = { jobs: JobPost[] };
-
-function Search({ jobs }: JobType) {
+function Search({ jobs, setFilteredJobs, setJobDetail }: JobType) {
   const [search, setSearch] = useState<string>("");
-  const [matches, setMatches] = useState<CompanyName[]>([]);
-
-  const [filteredJobs, setFilteredJobs] = useState<JobPost[]>(jobs);
-  const [jobDetail, setJobDetail] = useState<JobPost>(jobs[0]);
+  const [matches, setMatches] = useState<string[]>([]);
 
   useEffect(() => {
-    const filtered: CompanyName[] = [];
+    const filtered: string[] = [];
     if (search.length > 0) {
       jobs.forEach((job) => {
         const regex = new RegExp(search, "gi");
@@ -64,10 +34,6 @@ function Search({ jobs }: JobType) {
 
     setMatches(filtered);
   }, [search]);
-
-  const showDetail = (post: JobPost) => {
-    setJobDetail(post);
-  };
 
   const handleSearchInput = (searchItem: string) => {
     setSearch(searchItem);
@@ -102,23 +68,22 @@ function Search({ jobs }: JobType) {
       <Box>
         <SearchBar
           search={search}
-          matches={matches}
           handleSearchInput={handleSearchInput}
           handleSubmit={handleSubmit}
-          selectSearchItem={selectSearchItem}
         />
-        <Stack p={5}>{PositionCheckBox()}</Stack>
-      </Box>
-      <HStack spacing={5} align="start" justify="start">
-        <Stack w={"40%"}>
-          {filteredJobs.map((job) => {
-            return (
-              <JobItemPreview key={job.id} post={job} showDetail={showDetail} />
-            );
-          })}
+        {matches.length > 0 && (
+          <Box borderWidth="1px" p={2} mt={1}>
+            {matches?.map((item, index) => (
+              <Text key={index} onClick={() => selectSearchItem(item)}>
+                {item}
+              </Text>
+            ))}
+          </Box>
+        )}
+        <Stack p={5}>
+          <Filter />
         </Stack>
-        <Stack w={"60%"}>{jobDetail && <JobItem post={jobDetail} />}</Stack>
-      </HStack>
+      </Box>
     </Stack>
   );
 }

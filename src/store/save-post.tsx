@@ -22,7 +22,6 @@ const SavedPostContext = createContext<contextProps>(defaultState);
 export function SavedPostContextProvider(props: Props) {
   const [saved, setSaved] = useState<JobPost[]>([]);
 
-  console.log("saved ", saved);
   useEffect(() => {
     const savedPosts = JSON.parse(localStorage.getItem("savedPosts") || "[]");
     if (savedPosts) {

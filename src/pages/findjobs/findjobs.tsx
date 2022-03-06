@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-import { Stack } from "@chakra-ui/react";
+import { Stack, HStack } from "@chakra-ui/react";
 
 import Search from "./search/search";
+import JobItemPreview from "../../components/jobItem-preview/jobItem-preview";
+import JobItem from "../../components/jobItem/jobitem";
+
 import { JobPost } from "../../types/types";
 
 function FindJobs() {
-  const [jobs, setJobs] = useState<JobPost[]>();
+  const [jobs, setJobs] = useState<JobPost[]>([]);
+  const [filteredJobs, setFilteredJobs] = useState<JobPost[]>(jobs);
+  const [jobDetail, setJobDetail] = useState<JobPost>(jobs[0]);
 
   useEffect(() => {
     try {
@@ -24,12 +29,37 @@ function FindJobs() {
             jobList.push(job);
           }
           setJobs(jobList);
+          setJobDetail(jobList[0]);
         });
     } catch (error) {
       console.log(error);
     }
   }, []);
 
-  return <Stack p={5}>{jobs && <Search jobs={jobs} />}</Stack>;
+  const showDetail = (post: JobPost) => {
+    setJobDetail(post);
+  };
+
+  return (
+    <Stack p={5}>
+      {jobs && filteredJobs && (
+        <Search
+          jobs={jobs}
+          setFilteredJobs={setFilteredJobs}
+          setJobDetail={setJobDetail}
+        />
+      )}
+      <HStack spacing={5} align="start" justify="start">
+        <Stack w={"40%"}>
+          {filteredJobs?.map((job) => {
+            return (
+              <JobItemPreview key={job.id} post={job} showDetail={showDetail} />
+            );
+          })}
+        </Stack>
+        <Stack w={"60%"}>{jobDetail && <JobItem post={jobDetail} />}</Stack>
+      </HStack>
+    </Stack>
+  );
 }
 export default FindJobs;
