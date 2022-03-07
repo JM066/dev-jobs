@@ -9,8 +9,8 @@ import JobItem from "../../components/jobItem/jobitem";
 import { JobPost } from "../../types/types";
 
 function FindJobs() {
-  const [jobs, setJobs] = useState<JobPost[]>([]);
-  const [filteredJobs, setFilteredJobs] = useState<JobPost[]>(jobs);
+  const [jobs, setJobs] = useState<Array<JobPost>>([]);
+  const [filteredJobs, setFilteredJobs] = useState<Array<JobPost>>([]);
   const [jobDetail, setJobDetail] = useState<JobPost>(jobs[0]);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ function FindJobs() {
             jobList.push(job);
           }
           setJobs(jobList);
+          setFilteredJobs(jobList);
           setJobDetail(jobList[0]);
         });
     } catch (error) {
