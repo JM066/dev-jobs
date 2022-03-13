@@ -12,28 +12,25 @@ function Filter() {
     { id: "release-manager", title: "Release Manager" },
     { id: "security-engineer", title: "Security Engineer" },
   ];
-
-  const [checkBoxes, setCheckBoxes] = useState(
-    new Array(POSITIONS.length).fill(false)
-  );
+  const arr = new Array(POSITIONS.length).fill(false);
+  const [checkBoxes, setCheckBoxes] = useState(arr);
   const allChecked = checkBoxes.every(Boolean);
-  console.log("checkBOx", checkBoxes, allChecked);
+  const isIndeterminate = checkBoxes.some(Boolean) && !allChecked;
+
+  const checkAllBoxes = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const allChecked = checkBoxes.map((item) => (item = e.target.checked));
+    setCheckBoxes(allChecked);
+  };
 
   const handleChange = (i: number) => {
     const updateCheckBoxes = checkBoxes.map((item, index) =>
-      index === i ? !item : item
+      i === index ? !item : item
     );
     setCheckBoxes(updateCheckBoxes);
   };
-  const checkAll = () => {
-    const checkAllBoxes = checkBoxes.map((item, index) =>
-      item ? !item : item
-    );
-    console.log("checkall", checkAllBoxes);
-    setCheckBoxes(checkAllBoxes);
-  };
+
   return (
-    <CheckboxGroup colorScheme="green">
+    <CheckboxGroup colorScheme="green" value={checkBoxes}>
       <HStack spacing="24px">
         <Box
           w="100%"
@@ -44,18 +41,23 @@ function Filter() {
           <CustomCheckBox
             id="all"
             title="Check All"
-            onchange={checkAll}
+            onchange={(e) => checkAllBoxes(e)}
+            isIndeterminate={isIndeterminate}
             checked={allChecked}
           />
-          {POSITIONS.map((position, i: number) => (
-            <CustomCheckBox
-              key={position.id}
-              id={position.id}
-              title={position.title}
-              onchange={() => handleChange(i)}
-              checked={checkBoxes[i]}
-            />
-          ))}
+          {checkBoxes.map((box, i: number) => {
+            console.log("checkboxes:", checkBoxes, "check: ", i, box);
+            return (
+              <CustomCheckBox
+                key={POSITIONS[i].id}
+                id={POSITIONS[i].id}
+                value={box}
+                title={POSITIONS[i].title}
+                onchange={() => handleChange(i)}
+                checked={box}
+              />
+            );
+          })}
         </Box>
       </HStack>
     </CheckboxGroup>

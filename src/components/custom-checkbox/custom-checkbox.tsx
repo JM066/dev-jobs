@@ -6,11 +6,26 @@ interface Props {
   id: string;
   title: string;
   onchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isIndeterminate?: boolean;
   checked: boolean;
+  value?: string;
 }
-function CustomCheckBox({ id, title, onchange, checked }: Props) {
+function CustomCheckBox({
+  id,
+  title,
+  onchange,
+  checked,
+  isIndeterminate,
+  value,
+}: Props) {
+  console.log("isChecked", checked);
   return (
-    <Checkbox value={id} isChecked={checked} onChange={onchange}>
+    <Checkbox
+      value={value}
+      isIndeterminate={isIndeterminate}
+      isChecked={checked}
+      onChange={onchange}
+    >
       {title}
     </Checkbox>
   );
