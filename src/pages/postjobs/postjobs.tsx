@@ -28,7 +28,7 @@ function PostJobs() {
   const [employees, setEmployees] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
-  const [aboutJob, setAboutJob] = useState<string>("");
+  const [about, setabout] = useState<string>("");
   const [responsibilities, setResponsibilities] = useState<string>("");
   const [preferences, setPreferences] = useState<string>("");
   // const preferencesRef = useRef();
@@ -50,7 +50,7 @@ function PostJobs() {
       employees,
       title,
       type,
-      aboutJob,
+      about,
       preferences,
       responsibilities,
     };
@@ -152,9 +152,9 @@ function PostJobs() {
 
             <FormTextArea
               name="about"
-              id="aboutjobs"
-              value={aboutJob}
-              onChange={(e) => setAboutJob(e.currentTarget.value)}
+              id="abouts"
+              value={about}
+              onChange={(e) => setabout(e.currentTarget.value)}
               label="About the Job"
               required
             />

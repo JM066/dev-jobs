@@ -22,12 +22,12 @@ function JobItem({
   post: {
     id,
     title,
-    aboutJob,
+    about,
     employees,
     type,
     address,
-    companyName,
-    preferences,
+    company,
+    preference,
     responsibilities,
   },
 }: Props) {
@@ -41,12 +41,12 @@ function JobItem({
       savedContext?.addPost({
         id,
         title,
-        aboutJob,
+        about,
         employees,
         type,
         address,
-        companyName,
-        preferences,
+        company,
+        preference,
         responsibilities,
       });
     }
@@ -57,7 +57,7 @@ function JobItem({
       {showTitle && (
         <Box flex="1" textAlign="left">
           <Heading as="h3" size="sm">
-            {companyName.toUpperCase()}
+            {company.toUpperCase()}
           </Heading>
           <Badge colorScheme="green">{title}</Badge>
         </Box>
@@ -65,12 +65,12 @@ function JobItem({
 
       <Stack spacing={8}>
         <Text> {address}</Text>
-        <Text>{aboutJob}</Text>
+        <Text>{about}</Text>
         <Divider orientation="horizontal" />
         <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
           {responsibilities}
         </div>
-        /<Text>{preferences}</Text>
+        /<Text>{preference}</Text>
       </Stack>
       <Stack p={5} align="flex-end">
         <Button onClick={toggleSavedStatusHandler}>

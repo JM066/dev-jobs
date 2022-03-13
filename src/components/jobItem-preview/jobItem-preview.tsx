@@ -16,7 +16,7 @@ interface Props {
 
 function JobItemPreview({ ...props }: Props) {
   const { post, showDetail } = props;
-  const { title, type, address, companyName } = post;
+  const { title, type, address, company } = post;
   return (
     <Box
       onClick={() => showDetail(post)}
@@ -27,7 +27,7 @@ function JobItemPreview({ ...props }: Props) {
     >
       <Box flex="1" textAlign="left">
         <Heading as="h3" size="sm">
-          {companyName.toUpperCase()}
+          {company.toUpperCase()}
         </Heading>
         <Text> {type}</Text>
         <Badge colorScheme="green">{title}</Badge>

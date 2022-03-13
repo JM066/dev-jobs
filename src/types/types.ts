@@ -19,19 +19,24 @@ export type Job = {
   employees: number;
   title: string;
   type: string;
-  aboutJob?: string;
+  about?: string;
   responsibilities: string;
   preferences: string;
 };
 
 export type JobPost = {
   id: string;
-  companyName: string;
+  company: string;
   address: string;
   employees: number;
   title: string;
   type: string;
-  aboutJob?: string;
+  about?: string;
   responsibilities: string;
-  preferences: string;
+  preference: string;
+};
+export type CheckBox = {
+  id: string;
+  title: string;
+  selected: boolean;
 };

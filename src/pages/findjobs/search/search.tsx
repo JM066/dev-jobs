@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Stack, Spinner, Box, Text } from "@chakra-ui/react";
 
+import { getJobsByPosition } from "../../../firebase/firebase.utils";
+
 import Filter from "../filter/filter";
 
 import SearchBar from "../../../components/search-bar/search-bar";
@@ -21,8 +23,8 @@ function Search({ jobs, setFilteredJobs, setJobDetail }: JobType) {
     if (search.length > 0) {
       jobs.forEach((job) => {
         const regex = new RegExp(search, "gi");
-        if (job.companyName.toLowerCase().match(regex)) {
-          return filtered.push(job.companyName);
+        if (job.company.toLowerCase().match(regex)) {
+          return filtered.push(job.company);
         }
         if (job.title.toLowerCase().match(regex)) {
           if (!filtered.includes(job.title)) {
@@ -54,15 +56,18 @@ function Search({ jobs, setFilteredJobs, setJobDetail }: JobType) {
     const item = search.toLowerCase();
     const filtered = jobs.filter(
       (job) =>
-        job.companyName.toLowerCase() === item ||
-        job.title.toLowerCase() === item
+        job.company.toLowerCase() === item || job.title.toLowerCase() === item
     );
 
     setFilteredJobs(filtered);
     setJobDetail(filtered[0]);
     setSearch("");
   };
-
+  const handleFilteredPosition = async (positions: Array<string>) => {
+    const data = await getJobsByPosition(positions);
+    setFilteredJobs(data);
+    setJobDetail(data[0]);
+  };
   return (
     <Stack p={5}>
       <Box>
@@ -81,7 +86,7 @@ function Search({ jobs, setFilteredJobs, setJobDetail }: JobType) {
           </Box>
         )}
         <Stack p={5}>
-          <Filter />
+          <Filter handleFilteredPosition={handleFilteredPosition} />
         </Stack>
       </Box>
     </Stack>

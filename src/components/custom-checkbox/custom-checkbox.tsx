@@ -18,7 +18,6 @@ function CustomCheckBox({
   isIndeterminate,
   value,
 }: Props) {
-  console.log("isChecked", checked);
   return (
     <Checkbox
       value={value}

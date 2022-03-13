@@ -1,21 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Box, CheckboxGroup, HStack } from "@chakra-ui/react";
+import { POSITIONS } from "../../../const/index";
 import CustomCheckBox from "../../../components/custom-checkbox/custom-checkbox";
 
-function Filter() {
-  const POSITIONS = [
-    { id: "backend", title: "Back End Developer " },
-    { id: "build-engineer", title: "Build Engineer" },
-    { id: "frontend", title: "Front End Developer" },
-    { id: "product-manager", title: "Product Manager" },
-    { id: "release-manager", title: "Release Manager" },
-    { id: "security-engineer", title: "Security Engineer" },
-  ];
+interface Props {
+  handleFilteredPosition: (positions: Array<string>) => void;
+}
+function Filter({ handleFilteredPosition }: Props) {
   const arr = new Array(POSITIONS.length).fill(false);
   const [checkBoxes, setCheckBoxes] = useState(arr);
   const allChecked = checkBoxes.every(Boolean);
   const isIndeterminate = checkBoxes.some(Boolean) && !allChecked;
+
+  useEffect(() => {
+    const filtered: Array<string> = [];
+    checkBoxes.forEach((item, index) => {
+      return item === true && filtered.push(POSITIONS[index].id);
+    });
+    handleFilteredPosition(filtered);
+  }, [checkBoxes]);
 
   const checkAllBoxes = (e: React.ChangeEvent<HTMLInputElement>) => {
     const allChecked = checkBoxes.map((item) => (item = e.target.checked));
@@ -45,16 +49,15 @@ function Filter() {
             isIndeterminate={isIndeterminate}
             checked={allChecked}
           />
-          {checkBoxes.map((box, i: number) => {
-            console.log("checkboxes:", checkBoxes, "check: ", i, box);
+          {checkBoxes.map((checkbox, i: number) => {
             return (
               <CustomCheckBox
                 key={POSITIONS[i].id}
                 id={POSITIONS[i].id}
-                value={box}
+                value={checkbox}
                 title={POSITIONS[i].title}
                 onchange={() => handleChange(i)}
-                checked={box}
+                checked={checkbox}
               />
             );
           })}

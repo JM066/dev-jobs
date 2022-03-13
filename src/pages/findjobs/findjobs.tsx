@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-
 import { Stack, HStack } from "@chakra-ui/react";
-
+import { getAllJobs } from "../../firebase/firebase.utils";
 import Search from "./search/search";
 import JobItemPreview from "../../components/jobItem-preview/jobItem-preview";
 import JobItem from "../../components/jobItem/jobitem";
@@ -14,27 +13,25 @@ function FindJobs() {
   const [jobDetail, setJobDetail] = useState<JobPost>(jobs[0]);
 
   useEffect(() => {
-    try {
-      fetch("https://my-project-c37fd-default-rtdb.firebaseio.com/jobpost.json")
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          const jobList = [];
-          for (const key in data) {
-            const job = {
-              id: key,
-              ...data[key],
-            };
-            jobList.push(job);
-          }
-          setJobs(jobList);
-          setFilteredJobs(jobList);
-          setJobDetail(jobList[0]);
-        });
-    } catch (error) {
-      console.log(error);
+    async function fetchJobs() {
+      try {
+        const res = await getAllJobs();
+        const jobList = [];
+        for (const key in res) {
+          const job = {
+            id: key,
+            ...res[key],
+          };
+          jobList.push(job);
+        }
+        setJobs(jobList);
+        setFilteredJobs(jobList);
+        setJobDetail(jobList[0]);
+      } catch (error) {
+        console.log(error);
+      }
     }
+    fetchJobs();
   }, []);
 
   const showDetail = (post: JobPost) => {
