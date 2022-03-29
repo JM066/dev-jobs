@@ -8,7 +8,7 @@ import {
   UnorderedList,
   Box,
 } from "@chakra-ui/react";
-import { JobPost } from "../../types/types";
+import { JobPost } from "../../type";
 interface Props {
   post: JobPost;
   showDetail: (id: JobPost) => void;

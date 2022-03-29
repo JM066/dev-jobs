@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User } from "../../types/types";
+import { User } from "../../type";
 
 import { ButtonGroup, Stack, Box } from "@chakra-ui/react";
 

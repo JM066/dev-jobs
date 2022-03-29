@@ -7,7 +7,7 @@ import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import CustomButton from "../Button";
 import FormInput from "../FormInput";
 
-import { User } from "../../types/types";
+import { User } from "../../type";
 import styles from "./SignUp.module.scss";
 
 const SignUp = () => {

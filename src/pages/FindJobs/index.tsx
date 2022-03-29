@@ -5,7 +5,7 @@ import Search from "./Search";
 import JobItemPreview from "../../components/JobItemPreview";
 import JobItem from "../../components/JobItem";
 
-import { JobPost } from "../../types/types";
+import { JobPost } from "../../type";
 
 function FindJobs() {
   const [jobs, setJobs] = useState<Array<JobPost>>([]);
