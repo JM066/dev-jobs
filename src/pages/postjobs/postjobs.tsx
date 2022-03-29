@@ -20,7 +20,7 @@ import FormInput from "../../components/form-input/form-input";
 import CustomButton from "../../components/button/custom-button";
 import FormTextArea from "../../components/form-textarea/form-textarea";
 
-import { Job } from "../../types/types";
+import { Job } from "../../type";
 
 function PostJobs() {
   const [companyName, setCompanyName] = useState<string>("");

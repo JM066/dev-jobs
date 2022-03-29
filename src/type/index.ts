@@ -35,3 +35,6 @@ export type JobPost = {
   responsibilities: string;
   preferences: string;
 };
+export type ColorMode = {
+  colorMode: "light" | "dark";
+};

@@ -10,7 +10,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import SavedPostContext from "../../store/save-post";
-import { JobPost } from "../../types/types";
+import { JobPost } from "../../type";
 
 interface Props {
   post: JobPost;

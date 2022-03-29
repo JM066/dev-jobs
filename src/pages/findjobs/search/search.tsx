@@ -4,7 +4,7 @@ import { Stack, Spinner, Box, Text } from "@chakra-ui/react";
 import Filter from "../filter/filter";
 
 import SearchBar from "../../../components/search-bar/search-bar";
-import { JobPost } from "../../../types/types";
+import { JobPost } from "../../../type";
 
 type JobType = {
   jobs: JobPost[];

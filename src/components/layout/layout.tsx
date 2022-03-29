@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Stack } from "@chakra-ui/react";
 import Header from "../header/header";
 
-import { UserData } from "../../types/types";
+import { UserData } from "../../type";
 
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
