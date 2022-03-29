@@ -1,13 +1,13 @@
 import React, { Suspense, lazy } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Spinner } from "@chakra-ui/react";
-import Layout from "./components/layout/layout";
-import PostJobs from "./pages/postjobs/postjobs";
-import MyList from "./pages/mylist/mylist";
-import Main from "./pages/main/main";
-import SignInAndOut from "./pages/sign-in-and-out/sign-in-and-out";
+import Layout from "./components/Layout";
+import PostJobs from "./pages/PostJobs";
+import MyList from "./pages/MyList";
+import Main from "./pages/Main";
+import SignInAndOut from "./pages/SignInAndOut";
 
-const FindJobs = lazy(() => import("./pages/findjobs/findjobs"));
+const FindJobs = lazy(() => import("./pages/FindJobs"));
 
 function App() {
   return (
