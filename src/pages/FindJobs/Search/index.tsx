@@ -3,10 +3,8 @@ import { Stack, Spinner, Box, Text } from "@chakra-ui/react";
 
 import { getJobsByPosition } from "../../../firebase/firebase.utils";
 
-import Filter from "../Filter";
-
-import SearchBar from "../../../components/SearchBar";
-import { JobPost } from "../../../types/types";
+import SearchBar from "../../../components/search-bar/search-bar";
+import { JobPost } from "../../../type";
 
 type JobType = {
   jobs: JobPost[];

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "@chakra-ui/react";
 
-import { UserData } from "../../types/types";
+import { UserData } from "../../type";
 
 import CustomButton from "../Button";
 

@@ -1,7 +1,7 @@
 import { Props } from "framer-motion/types/types";
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
-import { JobPost } from "../types/types";
+import { JobPost } from "../type";
 
 interface contextProps {
   savedPost: JobPost[];

@@ -40,3 +40,6 @@ export type CheckBox = {
   title: string;
   selected: boolean;
 };
+export type ColorMode = {
+  colorMode: "light" | "dark";
+};
