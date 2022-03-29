@@ -21,7 +21,7 @@ import CustomButton from "../../components/Button";
 import FormTextArea from "../../components/FormTextarea";
 
 import { POSITIONS } from "../../const/index";
-import { Job } from "../../type";
+// import { Job } from "../../type";
 
 function PostJobs() {
   const [company, setCompany] = useState<string>("");

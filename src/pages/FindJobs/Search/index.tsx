@@ -3,7 +3,8 @@ import { Stack, Spinner, Box, Text } from "@chakra-ui/react";
 
 import { getJobsByPosition } from "../../../firebase/firebase.utils";
 
-import SearchBar from "../../../components/search-bar/search-bar";
+import SearchBar from "../../../components/SearchBar";
+import Filter from "../Filter";
 import { JobPost } from "../../../type";
 
 type JobType = {
@@ -21,7 +22,7 @@ function Search({ jobs, setFilteredJobs, setJobDetail }: JobType) {
     if (search.length > 0) {
       jobs.forEach((job) => {
         const regex = new RegExp(search, "gi");
-        if (job.company.toLowerCase().match(regex)) {
+        if (job.company?.toLowerCase().match(regex)) {
           return filtered.push(job.company);
         }
         if (job.title.toLowerCase().match(regex)) {
