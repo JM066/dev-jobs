@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { ChakraProvider, CSSReset } from "@chakra-ui/provider";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import "../src/styles/globals.scss";
 import App from "./App";
 import { SavedPostContextProvider } from "./store/save-post";

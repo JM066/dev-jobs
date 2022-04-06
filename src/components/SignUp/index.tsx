@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import { Stack, Box } from "@chakra-ui/react";
+import { Stack, Box, Button } from "@chakra-ui/react";
 
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
-import CustomButton from "../Button";
 import FormInput from "../FormInput";
 
 import { User } from "../../type";
-import styles from "./SignUp.module.scss";
 
 const SignUp = () => {
   const [currentUser, setCurrentUser] = useState<User>({
@@ -64,7 +62,7 @@ const SignUp = () => {
       borderRadius="md"
     >
       <form onSubmit={handleSubmit}>
-        <Stack spacing="14px">
+        <Stack spacing={4}>
           <FormInput
             type="text"
             name="displayName"
@@ -101,11 +99,11 @@ const SignUp = () => {
             label="Confirm Password"
             required
           />
-        </Stack>
 
-        <CustomButton type="submit" className={styles.SignUpButton}>
-          Sign Up
-        </CustomButton>
+          <Button variant="primary" type="submit">
+            Sign Up
+          </Button>
+        </Stack>
       </form>
     </Box>
   );

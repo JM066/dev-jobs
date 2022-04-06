@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { User } from "../../type";
 
-import { ButtonGroup, Stack, Box } from "@chakra-ui/react";
+import { ButtonGroup, Stack, Box, Button } from "@chakra-ui/react";
 
 import { auth, signInWithGoogle } from "src/firebase/firebase.utils";
 import firebase from "firebase/compat/app";
 
-import CustomButton from "../Button";
 import FormInput from "../FormInput";
 
 function SignIn() {
@@ -72,10 +71,16 @@ function SignIn() {
             required
           />
           <ButtonGroup variant="outline" spacing="3">
-            <CustomButton type="submit"> Sign in </CustomButton>
-            <CustomButton isGoogleSignIn onClick={signInWithGoogle}>
+            <Button variant="primary" type="submit">
+              Sign in
+            </Button>
+            <Button
+              variant="secondary"
+              isGoogleSignIn
+              onClick={signInWithGoogle}
+            >
               SignIn with Google
-            </CustomButton>
+            </Button>
           </ButtonGroup>
         </Stack>
 
