@@ -1,57 +1,57 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Stack, Box, Button } from "@chakra-ui/react";
 
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
-
 import FormInput from "../FormInput";
 
-import { User } from "../../type";
+import { SignUpForm } from "../../type";
 
 const SignUp = () => {
-  const [currentUser, setCurrentUser] = useState<User>({
-    displayName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const schema = yup.object().shape({
+    displayName: yup
+      .string()
+      .max(12, "User name must be less than 12 characters")
+      .required("User name is required"),
+    email: yup
+      .string()
+      .email("Must be a valid email")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    passwordConfirm: yup
+      .string()
+      .required("Confirm Password is required")
+      .oneOf([yup.ref("password")], "Passwords must match"),
   });
 
-  useEffect(() => {
-    console.log("currentUser", currentUser);
-  }, [currentUser]);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<SignUpForm>({ resolver: yupResolver(schema) });
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const { displayName, email, password, confirmPassword } = currentUser;
-    if (password !== confirmPassword) {
-      alert("password do not match");
-      return;
-    }
-
+  const onSubmit = async (data: SignUpForm) => {
+    const { displayName, email, password } = data;
     try {
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
       );
-      await createUserProfileDocument(user, { displayName });
-      setCurrentUser({
-        displayName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
+      const signedUp = await createUserProfileDocument(user, { displayName });
+      signedUp && setIsLoading(false);
+      reset();
     } catch (error) {
       console.log("error", error);
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setCurrentUser((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
   return (
     <Box
       p={10}
@@ -61,46 +61,38 @@ const SignUp = () => {
       flex="1"
       borderRadius="md"
     >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
           <FormInput
             type="text"
-            name="displayName"
-            id="displayName"
-            value={currentUser.displayName}
-            onChange={handleChange}
-            label="Display Name"
-            required
+            name="name"
+            label="name"
+            error={errors?.displayName?.message}
+            register={register("displayName")}
           />
           <FormInput
             type="email"
-            id="email"
             name="email"
-            value={currentUser.email}
-            onChange={handleChange}
             label="email"
-            required
+            error={errors?.email?.message}
+            register={register("email")}
           />
           <FormInput
             type="password"
             name="password"
-            id="password"
-            value={currentUser.password}
-            onChange={handleChange}
             label="password"
-            required
+            error={errors?.password?.message}
+            register={register("password")}
           />
           <FormInput
             type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            value={currentUser.confirmPassword}
-            onChange={handleChange}
-            label="Confirm Password"
-            required
+            name="passwordConfirm"
+            label="passwordConfirm"
+            error={errors?.passwordConfirm?.message}
+            register={register("passwordConfirm")}
           />
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" isLoading={isLoading}>
             Sign Up
           </Button>
         </Stack>

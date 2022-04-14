@@ -31,7 +31,6 @@ function Header({ currentUser }: { currentUser: UserData | null }) {
       ) : (
         <Button
           className={styles.Link}
-          noStyle
           onClick={() =>
             setUser({ id: "", email: "", displayName: "", createdAt: null })
           }

@@ -1,43 +1,42 @@
 import React, { useState } from "react";
-import { User } from "../../type";
-
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ButtonGroup, Stack, Box, Button } from "@chakra-ui/react";
-
 import { auth, signInWithGoogle } from "src/firebase/firebase.utils";
-import firebase from "firebase/compat/app";
-
 import FormInput from "../FormInput";
 
+import { SignInForm } from "../../type";
+
 function SignIn() {
-  const [user, setUser] = useState<User>({ email: "", password: "" });
-  const [message, setMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const { email, password } = user;
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Must be a valid email")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<SignInForm>({ resolver: yupResolver(schema) });
 
+  const onSubmit = async ({ email, password }: SignInForm) => {
+    setIsLoading(true);
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      setUser({ email: "", password: "" });
-      setMessage("");
+      const signedIn = await auth.signInWithEmailAndPassword(email, password);
+      signedIn && setIsLoading(false);
+      reset();
     } catch (error) {
-      if ((error as Error).name === "FirebaseError") {
-        const firebaseError = error as firebase.FirebaseError;
-        const errorMessage = firebaseError.message;
-        const message = errorMessage.split(" ");
-        message.shift();
-        message.pop();
-        setMessage(message.join(" "));
-      }
+      console.log(error);
     }
-  };
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-
-    setUser((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
   };
 
   return (
@@ -49,42 +48,32 @@ function SignIn() {
       flex="1"
       borderRadius="md"
     >
-      <form onSubmit={(event) => handleSubmit(event)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing="15px">
           <FormInput
             type="email"
             name="email"
-            id="email"
-            value={user.email}
-            onChange={handleChange}
-            label="email"
-            required
+            label="Email"
+            error={errors?.email?.message}
+            register={register("email")}
           />
 
           <FormInput
             type="password"
-            id="password"
+            label="Password"
             name="password"
-            value={user.password}
-            onChange={handleChange}
-            label="password"
-            required
+            error={errors?.password?.message}
+            register={register("password")}
           />
           <ButtonGroup variant="outline" spacing="3">
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" isLoading={isLoading}>
               Sign in
             </Button>
-            <Button
-              variant="secondary"
-              isGoogleSignIn
-              onClick={signInWithGoogle}
-            >
+            <Button variant="secondary" onClick={signInWithGoogle}>
               SignIn with Google
             </Button>
           </ButtonGroup>
         </Stack>
-
-        <p>{message}</p>
       </form>
     </Box>
   );

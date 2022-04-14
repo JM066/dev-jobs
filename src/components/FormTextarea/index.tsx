@@ -1,22 +1,43 @@
 import React from "react";
+import { useController, RegisterOptions } from "react-hook-form";
+import { FormControl, Textarea, FormLabel } from "@chakra-ui/react";
 
-import { FormControl, Text, Textarea } from "@chakra-ui/react";
-
-interface Props {
-  id: string;
-  label: string;
-  value: string;
+interface IFormTextArea {
+  control: any;
   name: string;
-  onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
-  required: boolean;
+  defaultValue?: { value: string | number; label: string } | null;
+  rules?: Omit<
+    RegisterOptions,
+    "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
+  >;
+  // onChange: (value: any) => void;
+  isMulti?: boolean;
+  // error?: FieldError | undefined;
+  // register: Omit<Partial<RegisterOptions>, "pattern">;
 }
-function FormTextArea(props: Props) {
-  const { id, label } = props;
-
+function FormTextArea({
+  control,
+  name,
+  defaultValue = null,
+  rules,
+}: IFormTextArea) {
+  const {
+    field: { onChange, value },
+  } = useController({
+    name,
+    control,
+    rules: { required: true },
+    defaultValue: "",
+  });
   return (
-    <FormControl id={id} required={true}>
-      <Text mb="8px">{label}</Text>
-      <Textarea {...props} />
+    <FormControl required={true}>
+      <FormLabel>{name}</FormLabel>
+      <Textarea
+        value={value}
+        onChange={(vale) => {
+          return onChange(value);
+        }}
+      />
     </FormControl>
   );
 }

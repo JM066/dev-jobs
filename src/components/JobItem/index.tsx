@@ -70,10 +70,10 @@ function JobItem({
         <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
           {responsibilities}
         </div>
-        /<Text>{preference}</Text>
+        <Text>{preference}</Text>
       </Stack>
       <Stack p={5} align="flex-end">
-        <Button onClick={toggleSavedStatusHandler}>
+        <Button variant="primary" onClick={toggleSavedStatusHandler}>
           {itemIsSaved ? "Remove from MyList" : "Save in MyList"}
         </Button>
       </Stack>

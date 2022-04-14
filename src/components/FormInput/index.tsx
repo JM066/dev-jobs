@@ -1,21 +1,27 @@
 import React from "react";
-import { Input, FormControl, FormLabel } from "@chakra-ui/react";
 
-interface Props {
-  id: string;
+import {
+  Input,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+
+interface IFormInput {
   label: string;
+  error?: string;
   name: string;
   type: string;
-  value: string | undefined;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  required?: boolean;
+  register: Record<string, any>;
 }
-function FormInput({ ...props }: Props) {
-  const { label, id } = props;
+function FormInput({ label, error, name, type, register }: IFormInput) {
   return (
-    <FormControl id={id} isRequired>
+    <FormControl isInvalid={true} isRequired>
       <FormLabel>{label}</FormLabel>
-      <Input {...props} />
+      <Input name={name} type={type} {...register} />
+      <FormErrorMessage fontSize="10px" h="12px" margin={0}>
+        {error}
+      </FormErrorMessage>
     </FormControl>
   );
 }

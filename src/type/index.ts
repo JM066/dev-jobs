@@ -1,27 +1,19 @@
-export type User = {
+export type SignUpForm = {
   id?: string;
   displayName?: string;
   email: string;
   password: string;
-  confirmPassword?: string;
+  passwordConfirm: string;
 };
-
+export type SignInForm = {
+  email: string;
+  password: string;
+};
 export type UserData = {
   id: string;
   displayName: string;
   email: string;
   createdAt: Date | null;
-};
-
-export type Job = {
-  companyName: string;
-  address: string;
-  employees: number;
-  title: string;
-  type: string;
-  about?: string;
-  responsibilities: string;
-  preferences: string;
 };
 
 export type JobPost = {

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import {
   Stack,
   Box,
@@ -21,36 +24,60 @@ import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextarea";
 
 import { POSITIONS } from "../../const/index";
+import { JobPost } from "../../type";
 
 function PostJobs() {
-  const [company, setCompany] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
+  // const [company, setCompany] = useState<string>("");
+  // const [address, setAddress] = useState<string>("");
   const [employees, setEmployees] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
-  const [about, setabout] = useState<string>("");
-  const [responsibilities, setResponsibilities] = useState<string>("");
-  const [preference, setPreference] = useState<string>("");
-  // const preferencesRef = useRef();
+  // const [about, setabout] = useState<string>("");
+  // const [responsibilities, setResponsibilities] = useState<string>("");
+  // const [preference, setPreference] = useState<string>("");
 
-  const history = useHistory();
-  const sumbitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // const history = useHistory();
 
-    const jobPost = {
-      company,
-      address,
-      employees,
-      title,
-      type,
-      about,
-      preference,
-      responsibilities,
-    };
-    createNewPost(jobPost);
-    history.replace("/findjobs");
+  const schema = yup.object().shape({
+    company: yup
+      .string()
+      .max(20, "Must be no more than 20 characters")
+      .required("Company Name is required"),
+    address: yup.string().required("Address is required"),
+  });
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<JobPost>({ resolver: yupResolver(schema) });
+
+  // const sumbitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+
+  //   const jobPost = {
+  //     company,
+  //     address,
+  //     employees,
+  //     title,
+  //     type,
+  //     about,
+  //     preference,
+  //     responsibilities,
+  //   };
+  //   createNewPost(jobPost);
+  //   history.replace("/findjobs");
+  // };
+  const onSubmit = async (data: JobPost) => {
+    try {
+      const post = await createNewPost(data);
+      console.log("post", post);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   return (
     <Box
       p={10}
@@ -69,25 +96,21 @@ function PostJobs() {
         borderWidth="1px"
         direction={["column"]}
       >
-        <form onSubmit={sumbitHandler}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing="20px">
             <FormInput
               type="text"
               name="company"
-              id="company"
-              value={company}
-              onChange={(e) => setCompany(e.currentTarget.value)}
               label="Company Name"
-              required
+              error={errors?.company?.message}
+              register={register("company")}
             />
             <FormInput
               type="text"
               name="address"
-              id="address"
-              value={address}
-              onChange={(e) => setAddress(e.currentTarget.value)}
-              label="Address"
-              required
+              label="Company Address"
+              error={errors?.address?.message}
+              register={register("address")}
             />
 
             <FormLabel>Number of Employees</FormLabel>
@@ -128,31 +151,9 @@ function PostJobs() {
               </RadioGroup>
             </FormControl>
 
-            <FormTextArea
-              name="about"
-              id="abouts"
-              value={about}
-              onChange={(e) => setabout(e.currentTarget.value)}
-              label="About the Job"
-              required
-            />
-            <FormTextArea
-              name="responsibilities"
-              id="responsibility"
-              value={responsibilities}
-              onChange={(e) => setResponsibilities(e.currentTarget.value)}
-              label="Responsibilities"
-              required
-            />
-            <FormTextArea
-              name="preferences"
-              id="preferences"
-              value={preference}
-              onChange={(e) => setPreference(e.currentTarget.value)}
-              label="Preferences"
-              required={false}
-              // ref={preferencesRef}
-            />
+            <FormTextArea name="about" control={control} isMulti />
+            <FormTextArea name="responsibilities" control={control} isMulti />
+            <FormTextArea name="preferences" control={control} />
             <Button type="submit"> Post </Button>
           </Stack>
         </form>
