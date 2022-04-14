@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Badge } from "@chakra-ui/react";
+import { Badge, Button } from "@chakra-ui/react";
 
 import { UserData } from "../../type";
-
-import CustomButton from "../Button";
 
 import { SavedPostContext } from "../../store/save-post";
 
@@ -31,7 +29,7 @@ function Header({ currentUser }: { currentUser: UserData | null }) {
           Sign-In
         </Link>
       ) : (
-        <CustomButton
+        <Button
           className={styles.Link}
           noStyle
           onClick={() =>
@@ -39,7 +37,7 @@ function Header({ currentUser }: { currentUser: UserData | null }) {
           }
         >
           SignOut
-        </CustomButton>
+        </Button>
       )}
       <Link to="/findjobs" className={styles.Link}>
         Find Jobs

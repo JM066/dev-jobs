@@ -41,7 +41,7 @@ function MyList() {
             <h2>
               <AccordionButton>
                 <Box flex="1" textAlign="left">
-                  {job.company.toUpperCase()}
+                  {job.company?.toUpperCase()}
                   <Badge ml={2} colorScheme="green">
                     {job.title}
                   </Badge>

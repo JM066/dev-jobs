@@ -14,14 +14,13 @@ import {
   RadioGroup,
   Radio,
   HStack,
+  Button,
 } from "@chakra-ui/react";
 import { createNewPost } from "../../firebase/firebase.utils";
 import FormInput from "../../components/FormInput";
-import CustomButton from "../../components/Button";
 import FormTextArea from "../../components/FormTextarea";
 
 import { POSITIONS } from "../../const/index";
-// import { Job } from "../../type";
 
 function PostJobs() {
   const [company, setCompany] = useState<string>("");
@@ -154,7 +153,7 @@ function PostJobs() {
               required={false}
               // ref={preferencesRef}
             />
-            <CustomButton type="submit"> Post </CustomButton>
+            <Button type="submit"> Post </Button>
           </Stack>
         </form>
       </Stack>

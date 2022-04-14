@@ -57,7 +57,7 @@ function JobItem({
       {showTitle && (
         <Box flex="1" textAlign="left">
           <Heading as="h3" size="sm">
-            {company.toUpperCase()}
+            {company?.toUpperCase()}
           </Heading>
           <Badge colorScheme="green">{title}</Badge>
         </Box>

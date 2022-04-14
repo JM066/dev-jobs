@@ -1,8 +1,6 @@
 import React from "react";
 import { Input, Stack, Button, HStack } from "@chakra-ui/react";
 
-import { BiSearch } from "react-icons/bi";
-
 interface Props {
   search: string;
   handleSearchInput: (searchItem: string) => void;
@@ -24,9 +22,7 @@ function SearchBar({
             onChange={(event) => handleSearchInput(event.target.value)}
             placeholder="Search by company or job title"
           />
-          <Button size="md" type="submit">
-            <BiSearch />
-          </Button>
+          <Button size="md" type="submit"></Button>
         </HStack>
       </form>
     </Stack>
