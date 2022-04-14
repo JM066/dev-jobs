@@ -9,7 +9,7 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
-import SavedPostContext from "../../store/save-post";
+import { SavedPostContext } from "../../store/save-post";
 import { JobPost } from "../../type";
 
 interface Props {

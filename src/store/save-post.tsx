@@ -1,9 +1,8 @@
-import { Props } from "framer-motion/types/types";
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import { JobPost } from "../type";
 
-interface contextProps {
+interface ProviderState {
   savedPost: JobPost[];
   totalPost: number;
   addPost: (jobPost: JobPost) => void;
@@ -17,9 +16,11 @@ const defaultState = {
   removePost: () => [],
   isItemSaved: () => false,
 };
-const SavedPostContext = createContext<contextProps>(defaultState);
+export const SavedPostContext = createContext<ProviderState>(defaultState);
 
-export function SavedPostContextProvider(props: Props) {
+export function SavedPostContextProvider(
+  props: React.PropsWithChildren<Record<never, never>>
+) {
   const [saved, setSaved] = useState<JobPost[]>([]);
 
   useEffect(() => {
@@ -51,10 +52,9 @@ export function SavedPostContextProvider(props: Props) {
     isItemSaved: isItemSavedHandler,
   };
   return (
-    <SavedPostContext.Provider value={context}>
+    <SavedPostContext.Provider value={context} {...props}>
       {props.children}
     </SavedPostContext.Provider>
   );
 }
-
-export default SavedPostContext;
+export default SavedPostContextProvider;

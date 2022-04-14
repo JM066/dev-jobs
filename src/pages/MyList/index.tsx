@@ -12,7 +12,7 @@ import {
 
 import JobItem from "../../components/JobItem";
 
-import SavedPostContext from "../../store/save-post";
+import { SavedPostContext } from "../../store/save-post";
 
 import styles from "./MyList.module.scss";
 

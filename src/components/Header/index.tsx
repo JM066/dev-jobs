@@ -6,7 +6,7 @@ import { UserData } from "../../type";
 
 import CustomButton from "../Button";
 
-import SavedPostContext from "../../store/save-post";
+import { SavedPostContext } from "../../store/save-post";
 
 import styles from "./Header.module.scss";
 
