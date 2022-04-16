@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Stack, Box, Button } from "@chakra-ui/react";
 
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
-import FormInput from "../FormInput";
+import FormInput from "../../components/Form/FormInput";
 
 import { SignUpForm } from "../../type";
 
@@ -66,28 +66,28 @@ const SignUp = () => {
           <FormInput
             type="text"
             name="name"
-            label="name"
+            label="Name"
             error={errors?.displayName?.message}
             register={register("displayName")}
           />
           <FormInput
             type="email"
             name="email"
-            label="email"
+            label="Email"
             error={errors?.email?.message}
             register={register("email")}
           />
           <FormInput
             type="password"
             name="password"
-            label="password"
+            label="Password"
             error={errors?.password?.message}
             register={register("password")}
           />
           <FormInput
             type="password"
             name="passwordConfirm"
-            label="passwordConfirm"
+            label="PasswordConfirm"
             error={errors?.passwordConfirm?.message}
             register={register("passwordConfirm")}
           />

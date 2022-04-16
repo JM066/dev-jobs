@@ -27,7 +27,7 @@ function JobItem({
     type,
     address,
     company,
-    preference,
+    preferences,
     responsibilities,
   },
 }: Props) {
@@ -46,7 +46,7 @@ function JobItem({
         type,
         address,
         company,
-        preference,
+        preferences,
         responsibilities,
       });
     }
@@ -70,7 +70,7 @@ function JobItem({
         <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
           {responsibilities}
         </div>
-        <Text>{preference}</Text>
+        <Text>{preferences}</Text>
       </Stack>
       <Stack p={5} align="flex-end">
         <Button variant="primary" onClick={toggleSavedStatusHandler}>

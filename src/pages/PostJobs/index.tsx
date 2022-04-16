@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,36 +6,26 @@ import { useForm } from "react-hook-form";
 import {
   Stack,
   Box,
-  FormControl,
-  FormLabel,
-  Select,
-  NumberInput,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  NumberInputField,
-  RadioGroup,
-  Radio,
-  HStack,
+  // FormControl,
+  // FormLabel,
+  // Select,
+  // NumberInput,
+  // NumberInputStepper,
+  // NumberIncrementStepper,
+  // NumberDecrementStepper,
+  // NumberInputField,
   Button,
 } from "@chakra-ui/react";
-import { createNewPost } from "../../firebase/firebase.utils";
-import FormInput from "../../components/FormInput";
-import FormTextArea from "../../components/FormTextarea";
+// import { createNewPost } from "../../firebase/firebase.utils";
+import FormInput from "../../components/Form/FormInput";
+import FormTextArea from "../../components/Form/FormTextarea";
+import FormRadio from "../../components/Form/FormRadio";
+import FormSelect from "../../components/Form/FormSelect";
 
-import { POSITIONS } from "../../const/index";
-import { JobPost } from "../../type";
+import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
+import { Job } from "../../type";
 
 function PostJobs() {
-  // const [company, setCompany] = useState<string>("");
-  // const [address, setAddress] = useState<string>("");
-  const [employees, setEmployees] = useState<number>(0);
-  const [title, setTitle] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  // const [about, setabout] = useState<string>("");
-  // const [responsibilities, setResponsibilities] = useState<string>("");
-  // const [preference, setPreference] = useState<string>("");
-
   // const history = useHistory();
 
   const schema = yup.object().shape({
@@ -44,14 +34,21 @@ function PostJobs() {
       .max(20, "Must be no more than 20 characters")
       .required("Company Name is required"),
     address: yup.string().required("Address is required"),
+    title: yup.string().required("Position is required"),
+    // employees: yup.number().required("Please provide a number of employees"),
+    // title: yup.string().required("Position is required"),
+    // about: yup.string().required("Job description is required"),
+    // responsibilities: yup.string().required("Please provide responsibilities"),
   });
   const {
     register,
     handleSubmit,
     control,
-    reset,
+    // reset,
     formState: { errors },
-  } = useForm<JobPost>({ resolver: yupResolver(schema) });
+  } = useForm<Job>({
+    resolver: yupResolver(schema),
+  });
 
   // const sumbitHandler = (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault();
@@ -69,14 +66,16 @@ function PostJobs() {
   //   createNewPost(jobPost);
   //   history.replace("/findjobs");
   // };
-  const onSubmit = async (data: JobPost) => {
-    try {
-      const post = await createNewPost(data);
-      console.log("post", post);
-      reset();
-    } catch (error) {
-      console.log(error);
-    }
+  const onSubmit = async (data: Job) => {
+    console.log("data?");
+    console.log("data data", data);
+    // try {
+    //   const post = await createNewPost(data);
+    //   console.log("post", post);
+    //   reset();
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
   return (
     <Box
@@ -88,32 +87,32 @@ function PostJobs() {
       alignItems="center"
       justifyContent="center"
     >
-      <Stack
+      {/* <Stack
         p={10}
         w={"70%"}
         shadow="md"
         borderRadius="md"
         borderWidth="1px"
         direction={["column"]}
-      >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing="20px">
-            <FormInput
-              type="text"
-              name="company"
-              label="Company Name"
-              error={errors?.company?.message}
-              register={register("company")}
-            />
-            <FormInput
-              type="text"
-              name="address"
-              label="Company Address"
-              error={errors?.address?.message}
-              register={register("address")}
-            />
+      > */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing="20px">
+          <FormInput
+            type="text"
+            name="company"
+            label="Company Name"
+            error={errors?.company?.message}
+            register={register("company")}
+          />
+          <FormInput
+            type="text"
+            name="address"
+            label="Company Address"
+            error={errors?.address?.message}
+            register={register("address")}
+          />
 
-            <FormLabel>Number of Employees</FormLabel>
+          {/* <FormLabel>Number of Employees</FormLabel>
             <NumberInput
               defaultValue={1}
               min={1}
@@ -125,39 +124,49 @@ function PostJobs() {
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
               </NumberInputStepper>
-            </NumberInput>
-            <FormControl id="DevOps Titles">
-              <FormLabel>DevOps Titles</FormLabel>
-              <Select
-                placeholder="Select Position"
-                required
-                value={title}
-                onChange={(e) => setTitle(e.currentTarget.value)}
-              >
-                {POSITIONS.map((title, i: number) => (
-                  <option key={i} id={title.id}>
-                    {title.id}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl as="fieldset">
-              <FormLabel as="legend">Type</FormLabel>
-              <RadioGroup defaultValue="full" vaule={type} onChange={setType}>
-                <HStack spacing="24px">
-                  <Radio value="full-time">Full Time</Radio>
-                  <Radio value="part-time">Part Time</Radio>
-                </HStack>
-              </RadioGroup>
-            </FormControl>
+            </NumberInput> */}
 
-            <FormTextArea name="about" control={control} isMulti />
-            <FormTextArea name="responsibilities" control={control} isMulti />
-            <FormTextArea name="preferences" control={control} />
-            <Button type="submit"> Post </Button>
-          </Stack>
-        </form>
-      </Stack>
+          <FormSelect
+            name="title"
+            label="Position"
+            control={control}
+            placeholder="Select Positions"
+            options={POSITIONS}
+            register={register("title")}
+          />
+          <FormRadio
+            name="type"
+            options={RADIO_OPTIONS}
+            control={control}
+            defaultValue="full-time"
+          />
+          <FormTextArea
+            name="about"
+            control={control}
+            register={register("about")}
+            isMulti
+            placeholder="About Company"
+          />
+          <FormTextArea
+            name="responsibilities"
+            control={control}
+            register={register("responsibilities")}
+            isMulti
+            placeholder="What are the requirements"
+          />
+          <FormTextArea
+            name="preferences"
+            control={control}
+            register={register("preferences")}
+            isMulti
+            placeholder="Any preference"
+          />
+          <Button variant="secondary" type="submit">
+            Post
+          </Button>
+        </Stack>
+      </form>
+      {/* </Stack> */}
     </Box>
   );
 }

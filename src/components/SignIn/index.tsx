@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ButtonGroup, Stack, Box, Button } from "@chakra-ui/react";
 import { auth, signInWithGoogle } from "src/firebase/firebase.utils";
-import FormInput from "../FormInput";
+import FormInput from "../Form/FormInput";
 
 import { SignInForm } from "../../type";
 
