@@ -1,11 +1,6 @@
 import React from "react";
 import { useController, RegisterOptions } from "react-hook-form";
-import {
-  FormControl,
-  Textarea,
-  FormLabel,
-  FormErrorMessage,
-} from "@chakra-ui/react";
+import { FormControl, Textarea, FormErrorMessage } from "@chakra-ui/react";
 
 interface IFormTextArea {
   control: any;
@@ -27,7 +22,6 @@ function FormTextArea({ control, name, rules, placeholder }: IFormTextArea) {
   });
   return (
     <FormControl required={true}>
-      <FormLabel>{name}</FormLabel>
       <Textarea
         placeholder={placeholder}
         value={field.value}

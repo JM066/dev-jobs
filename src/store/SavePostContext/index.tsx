@@ -19,7 +19,7 @@ export function SavedPostProvider(
   const [state, dispatch] = useReducer(savePostReducer, initialState);
 
   useEffect(() => {
-    const savedPosts = JSON.parse(localStorage.getItem("savedPosts") || "[]");
+    const savedPosts = JSON.parse(localStorage.getItem("posts") || "[]");
     if (savedPosts) {
       dispatch({
         type: "ADD_POST",
@@ -31,7 +31,7 @@ export function SavedPostProvider(
     }
   }, []);
   useEffect(() => {
-    localStorage.setItem("savedPosts", JSON.stringify(state));
+    localStorage.setItem("posts", JSON.stringify(state.savedPost));
   }, [state]);
 
   const addPost = (jobPost: JobPost) => {

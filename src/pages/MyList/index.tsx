@@ -35,7 +35,8 @@ function MyList() {
       <Heading as="h4" size="md" m={3}>
         My Job List
       </Heading>
-      {jobPosts?.map((job) => (
+
+      {jobPosts.map((job) => (
         <Accordion key={job.id} m={2} allowMultiple>
           <AccordionItem>
             <h2>

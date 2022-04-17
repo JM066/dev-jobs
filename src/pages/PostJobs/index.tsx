@@ -1,33 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 // import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import {
-  Stack,
-  Box,
-  // FormControl,
-  // FormLabel,
-  // Select,
-  // NumberInput,
-  // NumberInputStepper,
-  // NumberIncrementStepper,
-  // NumberDecrementStepper,
-  // NumberInputField,
-  Button,
-} from "@chakra-ui/react";
-// import { createNewPost } from "../../firebase/firebase.utils";
+import { Stack, Box, Button } from "@chakra-ui/react";
+import { createNewPost } from "../../firebase/firebase.utils";
 import FormInput from "../../components/Form/FormInput";
 import FormTextArea from "../../components/Form/FormTextarea";
 import FormRadio from "../../components/Form/FormRadio";
 import FormSelect from "../../components/Form/FormSelect";
+import FormNumberInput from "../../components/Form/FormNumberInput";
 
 import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
 import { Job } from "../../type";
 
 function PostJobs() {
   // const history = useHistory();
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const schema = yup.object().shape({
     company: yup
       .string()
@@ -35,47 +24,29 @@ function PostJobs() {
       .required("Company Name is required"),
     address: yup.string().required("Address is required"),
     title: yup.string().required("Position is required"),
-    // employees: yup.number().required("Please provide a number of employees"),
-    // title: yup.string().required("Position is required"),
-    // about: yup.string().required("Job description is required"),
-    // responsibilities: yup.string().required("Please provide responsibilities"),
+    employees: yup.number().required("Please provide a number of employees"),
+    about: yup.string().required("Job description is required"),
+    responsibilities: yup.string().required("Please provide responsibilities"),
   });
   const {
     register,
     handleSubmit,
     control,
-    // reset,
+    reset,
     formState: { errors },
   } = useForm<Job>({
     resolver: yupResolver(schema),
   });
 
-  // const sumbitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-
-  //   const jobPost = {
-  //     company,
-  //     address,
-  //     employees,
-  //     title,
-  //     type,
-  //     about,
-  //     preference,
-  //     responsibilities,
-  //   };
-  //   createNewPost(jobPost);
-  //   history.replace("/findjobs");
-  // };
   const onSubmit = async (data: Job) => {
-    console.log("data?");
-    console.log("data data", data);
-    // try {
-    //   const post = await createNewPost(data);
-    //   console.log("post", post);
-    //   reset();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    setIsLoading(true);
+    try {
+      await createNewPost(data);
+      setIsLoading(false);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Box
@@ -87,86 +58,73 @@ function PostJobs() {
       alignItems="center"
       justifyContent="center"
     >
-      {/* <Stack
+      <Stack
         p={10}
-        w={"70%"}
+        w={"50%"}
         shadow="md"
         borderRadius="md"
         borderWidth="1px"
         direction={["column"]}
-      > */}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing="20px">
-          <FormInput
-            type="text"
-            name="company"
-            label="Company Name"
-            error={errors?.company?.message}
-            register={register("company")}
-          />
-          <FormInput
-            type="text"
-            name="address"
-            label="Company Address"
-            error={errors?.address?.message}
-            register={register("address")}
-          />
+      >
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack spacing="20px">
+            <FormInput
+              type="text"
+              name="company"
+              label="Company Name"
+              error={errors?.company?.message}
+              register={register("company")}
+            />
+            <FormInput
+              type="text"
+              name="address"
+              label="Company Address"
+              error={errors?.address?.message}
+              register={register("address")}
+            />
 
-          {/* <FormLabel>Number of Employees</FormLabel>
-            <NumberInput
-              defaultValue={1}
-              min={1}
-              value={employees}
-              onChange={(value) => setEmployees(parseInt(value))}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput> */}
-
-          <FormSelect
-            name="title"
-            label="Position"
-            control={control}
-            placeholder="Select Positions"
-            options={POSITIONS}
-            register={register("title")}
-          />
-          <FormRadio
-            name="type"
-            options={RADIO_OPTIONS}
-            control={control}
-            defaultValue="full-time"
-          />
-          <FormTextArea
-            name="about"
-            control={control}
-            register={register("about")}
-            isMulti
-            placeholder="About Company"
-          />
-          <FormTextArea
-            name="responsibilities"
-            control={control}
-            register={register("responsibilities")}
-            isMulti
-            placeholder="What are the requirements"
-          />
-          <FormTextArea
-            name="preferences"
-            control={control}
-            register={register("preferences")}
-            isMulti
-            placeholder="Any preference"
-          />
-          <Button variant="secondary" type="submit">
-            Post
-          </Button>
-        </Stack>
-      </form>
-      {/* </Stack> */}
+            <FormSelect
+              name="title"
+              label="Position"
+              control={control}
+              placeholder="Select Positions"
+              options={POSITIONS}
+              register={register("title")}
+            />
+            <FormRadio
+              name="type"
+              options={RADIO_OPTIONS}
+              control={control}
+              defaultValue="full-time"
+            />
+            <FormNumberInput name="employees" control={control} />
+            <FormTextArea
+              name="about"
+              control={control}
+              register={register("about")}
+              isMulti
+              placeholder="About Company"
+            />
+            <FormTextArea
+              name="responsibilities"
+              control={control}
+              register={register("responsibilities")}
+              isMulti
+              placeholder="What are the requirements"
+            />
+            <FormTextArea
+              name="preferences"
+              control={control}
+              register={register("preferences")}
+              isMulti
+              placeholder="Any preference"
+            />
+            <Button variant="secondary" type="submit" isLoading={isLoading}>
+              Post
+            </Button>
+          </Stack>
+        </form>
+      </Stack>
     </Box>
   );
 }

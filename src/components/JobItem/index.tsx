@@ -31,14 +31,14 @@ function JobItem({
     responsibilities,
   },
 }: Props) {
-  const savedContext = useContext(SavedPostContext);
-  const itemIsSaved = savedContext?.isItemSaved(id);
+  const { isItemSaved, removePost, addPost } = useContext(SavedPostContext);
+  const itemIsSaved = isItemSaved(id);
 
   const toggleSavedStatusHandler = () => {
     if (itemIsSaved) {
-      savedContext?.removePost(id);
+      removePost(id);
     } else {
-      savedContext?.addPost({
+      addPost({
         id,
         title,
         about,
