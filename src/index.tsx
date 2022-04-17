@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import "../src/styles/globals.scss";
 import App from "./App";
-import SavedPostContextProvider from "./store/save-post";
+import SavedPostProvider from "./store/SavePostContext";
 import theme from "./theme";
 
 const Root = () => {
@@ -12,11 +12,11 @@ const Root = () => {
     <React.StrictMode>
       <ChakraProvider theme={theme}>
         <CSSReset />
-        <SavedPostContextProvider>
+        <SavedPostProvider>
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </SavedPostContextProvider>
+        </SavedPostProvider>
       </ChakraProvider>
     </React.StrictMode>
   );

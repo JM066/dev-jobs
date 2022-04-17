@@ -4,7 +4,7 @@ import { Badge, Button } from "@chakra-ui/react";
 
 import { UserData } from "../../type";
 
-import { SavedPostContext } from "../../store/save-post";
+import { SavedPostContext } from "../../store/SavePostContext";
 
 import styles from "./Header.module.scss";
 
