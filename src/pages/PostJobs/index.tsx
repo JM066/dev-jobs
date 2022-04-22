@@ -10,7 +10,7 @@ import FormTextArea from "../../components/Form/FormTextarea";
 import FormRadio from "../../components/Form/FormRadio";
 import FormSelect from "../../components/Form/FormSelect";
 import FormNumberInput from "../../components/Form/FormNumberInput";
-
+// import TextEditor from "../../components/TextEditor";
 import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
 import { Job } from "../../type";
 
@@ -125,6 +125,7 @@ function PostJobs() {
           </Stack>
         </form>
       </Stack>
+      {/* <TextEditor /> */}
     </Box>
   );
 }
