@@ -6,11 +6,11 @@ import { useForm } from "react-hook-form";
 import { Stack, Box, Button } from "@chakra-ui/react";
 import { createNewPost } from "../../firebase/firebase.utils";
 import FormInput from "../../components/Form/FormInput";
-import FormTextArea from "../../components/Form/FormTextarea";
+import TextEditor from "src/components/TextEditor";
 import FormRadio from "../../components/Form/FormRadio";
 import FormSelect from "../../components/Form/FormSelect";
 import FormNumberInput from "../../components/Form/FormNumberInput";
-// import TextEditor from "../../components/TextEditor";
+
 import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
 import { Job } from "../../type";
 
@@ -24,6 +24,7 @@ function PostJobs() {
       .required("Company Name is required"),
     address: yup.string().required("Address is required"),
     title: yup.string().required("Position is required"),
+    type: yup.string().required("Type is required"),
     employees: yup.number().required("Please provide a number of employees"),
     about: yup.string().required("Job description is required"),
     responsibilities: yup.string().required("Please provide responsibilities"),
@@ -39,8 +40,11 @@ function PostJobs() {
   });
 
   const onSubmit = async (data: Job) => {
+    console.log("cliceked");
     setIsLoading(true);
+    console.log("data data", data);
     try {
+      console.log("data data", data);
       await createNewPost(data);
       setIsLoading(false);
       reset();
@@ -98,34 +102,32 @@ function PostJobs() {
               defaultValue="full-time"
             />
             <FormNumberInput name="employees" control={control} />
-            <FormTextArea
+            <TextEditor
               name="about"
-              control={control}
               register={register("about")}
-              isMulti
-              placeholder="About Company"
+              control={control}
+              placeholder="Tell me about your company"
             />
-            <FormTextArea
+            <TextEditor
               name="responsibilities"
               control={control}
               register={register("responsibilities")}
-              isMulti
               placeholder="What are the requirements"
             />
-            <FormTextArea
+            {/* <TextEditor placeholder="Any preferences" /> */}
+            {/* <FormTextArea
               name="preferences"
               control={control}
               register={register("preferences")}
               isMulti
               placeholder="Any preference"
-            />
+            /> */}
             <Button variant="secondary" type="submit" isLoading={isLoading}>
               Post
             </Button>
           </Stack>
         </form>
       </Stack>
-      {/* <TextEditor /> */}
     </Box>
   );
 }

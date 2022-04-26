@@ -1,8 +1,9 @@
 import React from "react";
+// import { Textarea } from "@chakra-ui/react";
 // import { useController, RegisterOptions } from "react-hook-form";
 import { RegisterOptions } from "react-hook-form";
 import { FormControl, FormErrorMessage } from "@chakra-ui/react";
-import TextEditor from "../../../components/TextEditor";
+
 interface IFormTextArea {
   control: any;
   name: string;
@@ -30,8 +31,10 @@ function FormTextArea({ control, name, rules, placeholder }: IFormTextArea) {
         onChange={(value) => {
           return field.onChange(value);
         }}
-      ></Textarea> */}
-      <TextEditor />
+      >
+      
+      </Textarea> */}
+      {/* <TextEditor /> */}
       <FormErrorMessage fontSize="10px" h="12px" margin={0}>
         {/* {fieldState?.error} */}
       </FormErrorMessage>

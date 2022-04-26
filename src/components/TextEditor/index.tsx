@@ -1,68 +1,55 @@
-import React from "react";
-import { Editor, EditorState, RichUtils } from "draft-js";
-const BLOCK_TYPES = [
-  { label: "H1", style: "header-one" },
-  { label: "H2", style: "header-two" },
-  { label: "H3", style: "header-three" },
-  { label: "H4", style: "header-four" },
-  { label: "H5", style: "header-five" },
-  { label: "H6", style: "header-six" },
-  { label: "Blockquote", style: "blockquote" },
-  { label: "UL", style: "unordered-list-item" },
-  { label: "OL", style: "ordered-list-item" },
-  { label: "Code Block", style: "code-block" },
-];
-
-function TextEditor() {
-  const [editorState, setEditorState] = React.useState(
-    EditorState.createEmpty()
-  );
-
-  const editorRef = React.useRef<any>(null);
-
-  function focusEditor() {
-    if (editorRef.current !== null) {
-      editorRef?.current?.focus();
-    }
-  }
-
-  React.useEffect(() => {
-    focusEditor();
-  }, []);
+import React, { useState, useEffect } from "react";
+import { FormControl } from "@chakra-ui/react";
+import { RegisterOptions, useController } from "react-hook-form";
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
+import InlineStyleControls from "./InlineStyleControls";
+interface ITextEditor {
+  placeholder: string;
+  register: Omit<Partial<RegisterOptions>, "pattern">;
+  control: any;
+  name: string;
+}
+function TextEditor({ placeholder, name, register, control }: ITextEditor) {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editor, setEditor] = React.useState<Editor | null>(null);
+  const { field } = useController({
+    name,
+    control,
+    defaultValue: placeholder,
+  });
+  useEffect(() => {
+    editor?.focus();
+  }, [editor]);
 
   const onBlockClick = (style: string) => {
-    const nextState = RichUtils.toggleBlockType(editorState, style);
-    console.log("nextState", nextState);
-    setEditorState(nextState);
+    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+  };
+  const handleKeyCommand = (command: string) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      setEditorState(newState);
+      return "handled";
+    }
+    return "not-handled";
+  };
+  const handleEditorState = (editorState: EditorState) => {
+    const contentState = editorState.getCurrentContent();
+    console.log("content", convertToRaw(contentState));
+    field.onChange(contentState);
+    setEditorState(editorState);
   };
 
-  interface Props {
-    key: string;
-    label: string;
-    onToggle: (style: string) => void;
-    style: string;
-  }
-  const StyleButton = ({ label, style, onToggle }: Props) => {
-    return <button onClick={() => onToggle(style)}>{label}</button>;
-  };
   return (
-    <div onClick={focusEditor}>
-      <div>
-        {BLOCK_TYPES.map((type) => (
-          <StyleButton
-            key={type.label}
-            label={type.label}
-            onToggle={onBlockClick}
-            style={type.style}
-          />
-        ))}
-      </div>
+    <FormControl required={true}>
+      <InlineStyleControls onToggle={onBlockClick} />
       <Editor
-        ref={(editor: any) => (editorRef.current = editor)}
+        ref={(editor) => setEditor(editor)}
+        placeholder={placeholder}
         editorState={editorState}
-        onChange={(editorState) => setEditorState(editorState)}
+        handleKeyCommand={handleKeyCommand}
+        onChange={(editorState) => handleEditorState(editorState)}
       />
-    </div>
+    </FormControl>
   );
 }
 
