@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Stack, Box, Button } from "@chakra-ui/react";
+import { convertToRaw, DraftModel } from "draft-js";
 import { createNewPost } from "../../firebase/firebase.utils";
 import FormInput from "../../components/Form/FormInput";
 import TextEditor from "src/components/TextEditor";
@@ -39,10 +40,13 @@ function PostJobs() {
     resolver: yupResolver(schema),
   });
 
+  const saveData = (content: DraftModel.ImmutableData.ContentState) => {
+    console.log("data??", convertToRaw(content));
+  };
   const onSubmit = async (data: Job) => {
     console.log("cliceked");
     setIsLoading(true);
-    console.log("data data", data);
+    // console.log("data data", convertToRaw(data.about));
     try {
       console.log("data data", data);
       await createNewPost(data);
@@ -107,12 +111,14 @@ function PostJobs() {
               register={register("about")}
               control={control}
               placeholder="Tell me about your company"
+              saveData={saveData}
             />
             <TextEditor
               name="responsibilities"
               control={control}
               register={register("responsibilities")}
               placeholder="What are the requirements"
+              saveData={saveData}
             />
             {/* <TextEditor placeholder="Any preferences" /> */}
             {/* <FormTextArea
