@@ -1,15 +1,18 @@
 import React, { useEffect, useReducer } from "react";
 import { createContext } from "react";
-import savePostReducer, { initialState } from "src/reducer/SavePostReducer";
+import savePostReducer, {
+  initialState,
+  ProviderState,
+} from "src/reducer/SavePostReducer";
 import { JobPost } from "../../type";
 
-interface ProviderState {
-  savedPost: JobPost[];
-  totalPost: number;
-  addPost: (jobPost: JobPost) => void;
-  removePost: (jobId: string) => void;
-  isItemSaved: (jobId: string) => boolean;
-}
+// interface ProviderState {
+//   savedPost: JobPost[];
+//   totalPost: number;
+//   addPost: (jobPost: JobPost) => void;
+//   removePost: (jobId: string) => void;
+//   isItemSaved: (jobId: string) => boolean;
+// }
 
 export const SavedPostContext = createContext<ProviderState>(initialState);
 

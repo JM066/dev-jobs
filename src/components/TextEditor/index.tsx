@@ -35,7 +35,7 @@ function TextEditor({ placeholder, name, register, control }: ITextEditor) {
   const handleEditorState = (editorState: EditorState) => {
     const contentState = editorState.getCurrentContent();
     console.log("content", convertToRaw(contentState));
-    field.onChange(contentState);
+    field.onChange(convertToRaw(contentState).blocks);
     setEditorState(editorState);
   };
 
