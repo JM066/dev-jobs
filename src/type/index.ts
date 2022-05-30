@@ -1,3 +1,4 @@
+import { RawDraftContentBlock } from "draft-js";
 export type SignUpForm = {
   id?: string;
   displayName?: string;
@@ -23,9 +24,9 @@ export type JobPost = {
   employees: number;
   title: string;
   type: string;
-  about?: string;
-  responsibilities: string;
-  preferences: string;
+  about?: RawDraftContentBlock;
+  responsibilities: RawDraftContentBlock;
+  // preferences: string;
 };
 
 export type Job = {

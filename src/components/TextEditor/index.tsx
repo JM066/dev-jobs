@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormControl } from "@chakra-ui/react";
 import { RegisterOptions, useController } from "react-hook-form";
+// import draftToHtml from "draftjs-to-html";
 import {
   Editor,
   EditorState,
@@ -48,7 +49,7 @@ function TextEditor({
   const handleEditorState = (editorState: EditorState) => {
     const contentState = editorState.getCurrentContent();
     console.log("content", convertToRaw(contentState));
-    field.onChange(convertToRaw(contentState).blocks);
+    field.onChange(convertToRaw(contentState));
     setEditorState(editorState);
   };
 

@@ -13,7 +13,7 @@ import FormSelect from "../../components/Form/FormSelect";
 import FormNumberInput from "../../components/Form/FormNumberInput";
 
 import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
-import { Job } from "../../type";
+import { JobPost } from "../../type";
 
 function PostJobs() {
   // const history = useHistory();
@@ -27,8 +27,8 @@ function PostJobs() {
     title: yup.string().required("Position is required"),
     type: yup.string().required("Type is required"),
     employees: yup.number().required("Please provide a number of employees"),
-    about: yup.string().required("Job description is required"),
-    responsibilities: yup.string().required("Please provide responsibilities"),
+    // about: yup.required("Job description is required"),
+    // responsibilities: yup.string().required("Please provide responsibilities"),
   });
   const {
     register,
@@ -36,19 +36,18 @@ function PostJobs() {
     control,
     reset,
     formState: { errors },
-  } = useForm<Job>({
+  } = useForm<JobPost>({
     resolver: yupResolver(schema),
   });
 
   const saveData = (content: DraftModel.ImmutableData.ContentState) => {
     console.log("data??", convertToRaw(content));
   };
-  const onSubmit = async (data: Job) => {
+  const onSubmit = async (data: JobPost) => {
     console.log("cliceked");
     setIsLoading(true);
-    // console.log("data data", convertToRaw(data.about));
+    console.log("data data", data);
     try {
-      console.log("data data", data);
       await createNewPost(data);
       setIsLoading(false);
       reset();
@@ -120,14 +119,6 @@ function PostJobs() {
               placeholder="What are the requirements"
               saveData={saveData}
             />
-            {/* <TextEditor placeholder="Any preferences" /> */}
-            {/* <FormTextArea
-              name="preferences"
-              control={control}
-              register={register("preferences")}
-              isMulti
-              placeholder="Any preference"
-            /> */}
             <Button variant="secondary" type="submit" isLoading={isLoading}>
               Post
             </Button>
