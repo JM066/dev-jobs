@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { v1 as uuidV1 } from "uuid";
 import { Stack, Box, Button } from "@chakra-ui/react";
 import { convertToRaw, DraftModel } from "draft-js";
 import { createNewPost } from "../../firebase/firebase.utils";
@@ -27,8 +28,6 @@ function PostJobs() {
     title: yup.string().required("Position is required"),
     type: yup.string().required("Type is required"),
     employees: yup.number().required("Please provide a number of employees"),
-    // about: yup.required("Job description is required"),
-    // responsibilities: yup.string().required("Please provide responsibilities"),
   });
   const {
     register,
@@ -44,8 +43,8 @@ function PostJobs() {
     console.log("data??", convertToRaw(content));
   };
   const onSubmit = async (data: JobPost) => {
-    console.log("cliceked");
     setIsLoading(true);
+    data.id = uuidV1();
     console.log("data data", data);
     try {
       await createNewPost(data);

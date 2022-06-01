@@ -5,12 +5,12 @@ import { getJobsByPosition } from "../../../firebase/firebase.utils";
 
 import SearchBar from "../../../components/SearchBar";
 import Filter from "../Filter";
-import { JobPost } from "../../../type";
+import { JobPostState } from "../../../type";
 
 type JobType = {
-  jobs: JobPost[];
-  setFilteredJobs: React.Dispatch<React.SetStateAction<JobPost[]>>;
-  setJobDetail: React.Dispatch<React.SetStateAction<JobPost>>;
+  jobs: JobPostState[];
+  setFilteredJobs: React.Dispatch<React.SetStateAction<JobPostState[]>>;
+  setJobDetail: React.Dispatch<React.SetStateAction<JobPostState>>;
 };
 
 function Search({ jobs, setFilteredJobs, setJobDetail }: JobType) {

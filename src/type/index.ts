@@ -1,4 +1,8 @@
-import { RawDraftContentBlock } from "draft-js";
+import {
+  RawDraftContentBlock,
+  RawDraftContentState,
+  EditorState,
+} from "draft-js";
 export type SignUpForm = {
   id?: string;
   displayName?: string;
@@ -24,19 +28,31 @@ export type JobPost = {
   employees: number;
   title: string;
   type: string;
-  about?: RawDraftContentBlock;
-  responsibilities: RawDraftContentBlock;
-  // preferences: string;
+  about: RawDraftContentBlock | RawDraftContentState;
+  responsibilities: RawDraftContentBlock | RawDraftContentState;
 };
 
-export type Job = {
+export type JobPostState = {
+  id: string;
   company: string;
   address: string;
-  about?: string;
-  type: string;
+  employees: number;
   title: string;
-  responsibilities: string;
-  preferences: string;
+  type: string;
+  about: RawDraftContentState;
+  responsibilities: RawDraftContentState;
+};
+
+export type EditorStateType = {
+  id: string;
+  company: string;
+  address: string;
+  employees: number;
+  title: string;
+  type: string;
+  about: EditorState;
+  responsibilities: EditorState;
+  // [key: string]: EditorState;
 };
 export type CheckBox = {
   id: string;

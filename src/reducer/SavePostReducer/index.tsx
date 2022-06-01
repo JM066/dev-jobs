@@ -1,4 +1,4 @@
-import { JobPost } from "../../type";
+import { JobPostState } from "../../type";
 export const initialState = {
   savedPost: [],
   totalPost: 0,
@@ -7,9 +7,9 @@ export const initialState = {
   isItemSaved: () => false,
 };
 export interface ProviderState {
-  savedPost: JobPost[];
+  savedPost: JobPostState[];
   totalPost: number;
-  addPost: (jobPost: JobPost) => void;
+  addPost: (jobPost: JobPostState) => void;
   removePost: (jobId: string) => void;
   isItemSaved: (jobId: string) => boolean;
 }
@@ -18,7 +18,7 @@ interface Action {
   payload: Payload;
 }
 type Payload = {
-  savedPost: JobPost[];
+  savedPost: JobPostState[];
   totalPost: number;
 };
 const savePostReducer = (state: ProviderState, action: Action) => {

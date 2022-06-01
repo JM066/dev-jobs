@@ -4,7 +4,7 @@ import savePostReducer, {
   initialState,
   ProviderState,
 } from "src/reducer/SavePostReducer";
-import { JobPost } from "../../type";
+import { JobPostState } from "../../type";
 
 // interface ProviderState {
 //   savedPost: JobPost[];
@@ -37,7 +37,7 @@ export function SavedPostProvider(
     localStorage.setItem("posts", JSON.stringify(state.savedPost));
   }, [state]);
 
-  const addPost = (jobPost: JobPost) => {
+  const addPost = (jobPost: JobPostState) => {
     const updatedSavedPost = state.savedPost.concat(jobPost);
     const total = updatedSavedPost.length;
 
@@ -51,7 +51,7 @@ export function SavedPostProvider(
   };
   const removePost = (jobId: string) => {
     const updatedSavedPost = state.savedPost.filter(
-      (post: JobPost) => post.id !== jobId
+      (post: JobPostState) => post.id !== jobId
     );
     const total = updatedSavedPost.length;
 
@@ -64,7 +64,9 @@ export function SavedPostProvider(
     });
   };
   const isItemSaved = (jobId: string) => {
-    const isSaved = state.savedPost.some((post: JobPost) => post.id === jobId);
+    const isSaved = state.savedPost.some(
+      (post: JobPostState) => post.id === jobId
+    );
     return isSaved;
   };
 

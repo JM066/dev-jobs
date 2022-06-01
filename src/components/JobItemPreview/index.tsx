@@ -8,17 +8,18 @@ import {
   UnorderedList,
   Box,
 } from "@chakra-ui/react";
-import { JobPost } from "../../type";
+import { JobPostState } from "../../type";
 interface Props {
-  post: JobPost;
-  showDetail: (id: JobPost) => void;
+  post: JobPostState;
+  showDetail: React.Dispatch<React.SetStateAction<JobPostState>>;
 }
 
-function JobItemPreview({ ...props }: Props) {
-  const { post, showDetail } = props;
+function JobItemPreview({ post, showDetail }: Props) {
+  // const { post, showDetail } = props;
   const { title, type, address, company } = post;
-  console.log("company", company?.toUpperCase());
+
   return (
+    // <Button onClick={showDetail}>
     <Box
       onClick={() => showDetail(post)}
       w="100%"
@@ -39,6 +40,7 @@ function JobItemPreview({ ...props }: Props) {
         <UnorderedList></UnorderedList>
       </Stack>
     </Box>
+    // </Button>
   );
 }
 export default JobItemPreview;
