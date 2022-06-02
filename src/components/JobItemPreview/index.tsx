@@ -15,11 +15,9 @@ interface Props {
 }
 
 function JobItemPreview({ post, showDetail }: Props) {
-  // const { post, showDetail } = props;
   const { title, type, address, company } = post;
 
   return (
-    // <Button onClick={showDetail}>
     <Box
       onClick={() => showDetail(post)}
       w="100%"
@@ -40,7 +38,6 @@ function JobItemPreview({ post, showDetail }: Props) {
         <UnorderedList></UnorderedList>
       </Stack>
     </Box>
-    // </Button>
   );
 }
 export default JobItemPreview;

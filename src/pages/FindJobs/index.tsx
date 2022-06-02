@@ -17,7 +17,6 @@ function FindJobs() {
     async function fetchJobs() {
       try {
         const jobList = await getAllJobs();
-
         setJobs(jobList);
         setFilteredJobs(jobList);
         setJobSelected(jobList[0]);

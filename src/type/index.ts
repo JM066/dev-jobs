@@ -28,8 +28,8 @@ export type JobPost = {
   employees: number;
   title: string;
   type: string;
-  about: RawDraftContentBlock | RawDraftContentState;
-  responsibilities: RawDraftContentBlock | RawDraftContentState;
+  about: RawDraftContentBlock;
+  responsibilities: RawDraftContentBlock;
 };
 
 export type JobPostState = {
