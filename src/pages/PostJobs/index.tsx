@@ -14,7 +14,7 @@ import FormSelect from "../../components/Form/FormSelect";
 import FormNumberInput from "../../components/Form/FormNumberInput";
 
 import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
-import { JobPost } from "../../type";
+import { JobPostBlock } from "../../type";
 
 function PostJobs() {
   // const history = useHistory();
@@ -35,14 +35,14 @@ function PostJobs() {
     control,
     reset,
     formState: { errors },
-  } = useForm<JobPost>({
+  } = useForm<JobPostBlock>({
     resolver: yupResolver(schema),
   });
 
   const saveData = (content: DraftModel.ImmutableData.ContentState) => {
     console.log("data??", convertToRaw(content));
   };
-  const onSubmit = async (data: JobPost) => {
+  const onSubmit = async (data: JobPostBlock) => {
     setIsLoading(true);
     data.id = uuidV1();
     console.log("data data", data);

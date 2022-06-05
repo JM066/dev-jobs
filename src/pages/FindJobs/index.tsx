@@ -30,9 +30,6 @@ function FindJobs() {
     setPostDetail(jobSelected);
     console.log("job detail", postDetail);
   }, [jobSelected]);
-  // const showDetail = (post: JobPostState) => {
-  //   setJobDetail(post);
-  // };
 
   return (
     <Stack p={5}>

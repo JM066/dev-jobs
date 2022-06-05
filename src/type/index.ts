@@ -28,17 +28,12 @@ export type JobPost = {
   employees: number;
   title: string;
   type: string;
+};
+export type JobPostBlock = JobPost & {
   about: RawDraftContentBlock;
   responsibilities: RawDraftContentBlock;
-};
-
-export type JobPostState = {
-  id: string;
-  company: string;
-  address: string;
-  employees: number;
-  title: string;
-  type: string;
+}
+export type JobPostState = JobPost &  {
   about: RawDraftContentState;
   responsibilities: RawDraftContentState;
 };
