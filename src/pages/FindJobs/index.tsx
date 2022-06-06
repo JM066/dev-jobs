@@ -26,9 +26,9 @@ function FindJobs() {
     }
     fetchJobs();
   }, []);
+  
   useEffect(() => {
     setPostDetail(jobSelected);
-    console.log("job detail", postDetail);
   }, [jobSelected]);
 
   return (

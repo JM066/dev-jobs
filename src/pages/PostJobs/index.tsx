@@ -1,23 +1,19 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { v1 as uuidV1 } from "uuid";
 import { Stack, Box, Button } from "@chakra-ui/react";
-import { convertToRaw, DraftModel } from "draft-js";
 import { createNewPost } from "../../firebase/firebase.utils";
 import FormInput from "../../components/Form/FormInput";
 import TextEditor from "src/components/TextEditor";
 import FormRadio from "../../components/Form/FormRadio";
 import FormSelect from "../../components/Form/FormSelect";
 import FormNumberInput from "../../components/Form/FormNumberInput";
-
 import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
 import { JobPostBlock } from "../../type";
 
 function PostJobs() {
-  // const history = useHistory();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const schema = yup.object().shape({
     company: yup
@@ -39,13 +35,9 @@ function PostJobs() {
     resolver: yupResolver(schema),
   });
 
-  const saveData = (content: DraftModel.ImmutableData.ContentState) => {
-    console.log("data??", convertToRaw(content));
-  };
   const onSubmit = async (data: JobPostBlock) => {
     setIsLoading(true);
     data.id = uuidV1();
-    console.log("data data", data);
     try {
       await createNewPost(data);
       setIsLoading(false);
@@ -106,17 +98,13 @@ function PostJobs() {
             <FormNumberInput name="employees" control={control} />
             <TextEditor
               name="about"
-              register={register("about")}
               control={control}
               placeholder="Tell me about your company"
-              saveData={saveData}
             />
             <TextEditor
               name="responsibilities"
-              control={control}
-              register={register("responsibilities")}
+              control={control}         
               placeholder="What are the requirements"
-              saveData={saveData}
             />
             <Button variant="secondary" type="submit" isLoading={isLoading}>
               Post

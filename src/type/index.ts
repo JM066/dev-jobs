@@ -47,7 +47,6 @@ export type EditorStateType = {
   type: string;
   about: EditorState;
   responsibilities: EditorState;
-  // [key: string]: EditorState;
 };
 export type CheckBox = {
   id: string;

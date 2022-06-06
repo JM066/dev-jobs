@@ -19,10 +19,6 @@ function Layout({ children }: LayoutProps) {
   });
 
   useEffect(() => {
-    console.log("currentUser currentUser", currentUser);
-  }, [currentUser]);
-
-  useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (userAuth) => {
       console.log("userAuth", userAuth);
       if (userAuth) {

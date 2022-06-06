@@ -63,7 +63,6 @@ function Search({ jobs, setFilteredJobs, setJobDetail }: JobType) {
     setSearch("");
   };
   const handleFilteredPosition = async (positions: Array<string>) => {
-    console.log("positino", positions);
     const data = await getJobsByPosition(positions);
     setFilteredJobs(data);
     setJobDetail(data[0]);
