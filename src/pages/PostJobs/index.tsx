@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { v1 as uuidV1 } from "uuid";
 import { Stack, Box, Button } from "@chakra-ui/react";
 import { createNewPost } from "../../firebase/firebase.utils";
 import FormInput from "../../components/Form/FormInput";
-import FormTextArea from "../../components/Form/FormTextarea";
+import TextEditor from "src/components/TextEditor";
 import FormRadio from "../../components/Form/FormRadio";
 import FormSelect from "../../components/Form/FormSelect";
 import FormNumberInput from "../../components/Form/FormNumberInput";
-
 import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
-import { Job } from "../../type";
+import { JobPostBlock } from "../../type";
 
 function PostJobs() {
-  // const history = useHistory();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const schema = yup.object().shape({
     company: yup
@@ -24,9 +22,8 @@ function PostJobs() {
       .required("Company Name is required"),
     address: yup.string().required("Address is required"),
     title: yup.string().required("Position is required"),
+    type: yup.string().required("Type is required"),
     employees: yup.number().required("Please provide a number of employees"),
-    about: yup.string().required("Job description is required"),
-    responsibilities: yup.string().required("Please provide responsibilities"),
   });
   const {
     register,
@@ -34,12 +31,13 @@ function PostJobs() {
     control,
     reset,
     formState: { errors },
-  } = useForm<Job>({
+  } = useForm<JobPostBlock>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: Job) => {
+  const onSubmit = async (data: JobPostBlock) => {
     setIsLoading(true);
+    data.id = uuidV1();
     try {
       await createNewPost(data);
       setIsLoading(false);
@@ -98,26 +96,15 @@ function PostJobs() {
               defaultValue="full-time"
             />
             <FormNumberInput name="employees" control={control} />
-            <FormTextArea
+            <TextEditor
               name="about"
               control={control}
-              register={register("about")}
-              isMulti
-              placeholder="About Company"
+              placeholder="Tell me about your company"
             />
-            <FormTextArea
+            <TextEditor
               name="responsibilities"
-              control={control}
-              register={register("responsibilities")}
-              isMulti
+              control={control}         
               placeholder="What are the requirements"
-            />
-            <FormTextArea
-              name="preferences"
-              control={control}
-              register={register("preferences")}
-              isMulti
-              placeholder="Any preference"
             />
             <Button variant="secondary" type="submit" isLoading={isLoading}>
               Post

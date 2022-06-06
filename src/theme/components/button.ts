@@ -28,6 +28,12 @@ export const Button = {
         backgroundColor: "#718096",
       },
     },
+    default: {
+      backgroundColor: "light.default",
+      _hover: {
+        backgroundColor: "#718096",
+      },
+    },
   },
 
   defaultProps: null,

@@ -23,6 +23,7 @@ const theme = extendTheme({
       primary: "#319795",
       secondary: "#3182CE",
       tertiary: "#A0AEC0",
+      default: "#00000040",
       text: "#000",
       background: "#f5f5f5",
       labelText: "#00000080",
@@ -32,6 +33,8 @@ const theme = extendTheme({
     dark: {
       primary: "#3379ce",
       secondary: "#77b0f4",
+      tertiary: "#A0AEC0",
+      default: "#00000040",
       text: "#fff",
       background: "#272727",
       labelText: "#ffffff80",

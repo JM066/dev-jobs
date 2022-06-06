@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-
+// import { convertFromRaw, EditorState, Editor } from "draft-js";
 import {
   Stack,
   Text,
@@ -9,17 +9,17 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
+import EditorItem from "../../components/TextEditor/EditorItem";
 import { SavedPostContext } from "../../store/SavePostContext";
-import { JobPost } from "../../type";
+import { JobPostState } from "../../type";
 
 interface Props {
-  post: JobPost;
+  post: JobPostState;
   showTitle?: boolean;
 }
 
-function JobItem({
-  showTitle = true,
-  post: {
+function JobItem({ showTitle = true, post }: Props) {
+  const {
     id,
     title,
     about,
@@ -27,10 +27,9 @@ function JobItem({
     type,
     address,
     company,
-    preferences,
     responsibilities,
-  },
-}: Props) {
+  } = post;
+
   const { isItemSaved, removePost, addPost } = useContext(SavedPostContext);
   const itemIsSaved = isItemSaved(id);
 
@@ -46,7 +45,6 @@ function JobItem({
         type,
         address,
         company,
-        preferences,
         responsibilities,
       });
     }
@@ -55,23 +53,22 @@ function JobItem({
   return (
     <Box w="100%" borderWidth="1px" borderadius="lg" p="6">
       {showTitle && (
-        <Box flex="1" textAlign="left">
-          <Heading as="h3" size="sm">
-            {company?.toUpperCase()}
-          </Heading>
-          <Badge colorScheme="green">{title}</Badge>
-        </Box>
+        <>
+          <Box flex="1" textAlign="left">
+            <Heading as="h3" size="sm">
+              {company?.toUpperCase()}
+            </Heading>
+            <Badge colorScheme="green">{title}</Badge>
+          </Box>
+          <Stack spacing={8}>
+            <Text> {address}</Text>
+            <Divider orientation="horizontal" />
+            <EditorItem text={about} />
+            <EditorItem text={responsibilities} />
+          </Stack>
+        </>
       )}
 
-      <Stack spacing={8}>
-        <Text> {address}</Text>
-        <Text>{about}</Text>
-        <Divider orientation="horizontal" />
-        <div style={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}>
-          {responsibilities}
-        </div>
-        <Text>{preferences}</Text>
-      </Stack>
       <Stack p={5} align="flex-end">
         <Button variant="primary" onClick={toggleSavedStatusHandler}>
           {itemIsSaved ? "Remove from MyList" : "Save in MyList"}

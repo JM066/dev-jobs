@@ -1,15 +1,18 @@
 import React, { useEffect, useReducer } from "react";
 import { createContext } from "react";
-import savePostReducer, { initialState } from "src/reducer/SavePostReducer";
-import { JobPost } from "../../type";
+import savePostReducer, {
+  initialState,
+  ProviderState,
+} from "src/reducer/SavePostReducer";
+import { JobPostState } from "../../type";
 
-interface ProviderState {
-  savedPost: JobPost[];
-  totalPost: number;
-  addPost: (jobPost: JobPost) => void;
-  removePost: (jobId: string) => void;
-  isItemSaved: (jobId: string) => boolean;
-}
+// interface ProviderState {
+//   savedPost: JobPost[];
+//   totalPost: number;
+//   addPost: (jobPost: JobPost) => void;
+//   removePost: (jobId: string) => void;
+//   isItemSaved: (jobId: string) => boolean;
+// }
 
 export const SavedPostContext = createContext<ProviderState>(initialState);
 
@@ -34,7 +37,7 @@ export function SavedPostProvider(
     localStorage.setItem("posts", JSON.stringify(state.savedPost));
   }, [state]);
 
-  const addPost = (jobPost: JobPost) => {
+  const addPost = (jobPost: JobPostState) => {
     const updatedSavedPost = state.savedPost.concat(jobPost);
     const total = updatedSavedPost.length;
 
@@ -48,7 +51,7 @@ export function SavedPostProvider(
   };
   const removePost = (jobId: string) => {
     const updatedSavedPost = state.savedPost.filter(
-      (post: JobPost) => post.id !== jobId
+      (post: JobPostState) => post.id !== jobId
     );
     const total = updatedSavedPost.length;
 
@@ -61,7 +64,9 @@ export function SavedPostProvider(
     });
   };
   const isItemSaved = (jobId: string) => {
-    const isSaved = state.savedPost.some((post: JobPost) => post.id === jobId);
+    const isSaved = state.savedPost.some(
+      (post: JobPostState) => post.id === jobId
+    );
     return isSaved;
   };
 
