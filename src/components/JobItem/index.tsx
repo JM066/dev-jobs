@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 // import { convertFromRaw, EditorState, Editor } from "draft-js";
 import {
   Stack,
@@ -6,11 +6,11 @@ import {
   Divider,
   Heading,
   Badge,
-  Button,
+  // Button,
   Box,
 } from "@chakra-ui/react";
 import EditorItem from "../../components/TextEditor/EditorItem";
-import { SavedPostContext } from "../../store/SavePostContext";
+// import { SavedPostContext } from "../../store/SavePostContext";
 import { JobPostState } from "../../type";
 
 interface Props {
@@ -20,35 +20,35 @@ interface Props {
 
 function JobItem({ showTitle = true, post }: Props) {
   const {
-    id,
+    // id,
     title,
     about,
-    employees,
-    type,
+    // employees,
+    // type,
     address,
     company,
     responsibilities,
   } = post;
 
-  const { isItemSaved, removePost, addPost } = useContext(SavedPostContext);
-  const itemIsSaved = isItemSaved(id);
+  // const { isItemSaved, removePost, addPost } = useContext(SavedPostContext);
+  // const itemIsSaved = isItemSaved(id);
 
-  const toggleSavedStatusHandler = () => {
-    if (itemIsSaved) {
-      removePost(id);
-    } else {
-      addPost({
-        id,
-        title,
-        about,
-        employees,
-        type,
-        address,
-        company,
-        responsibilities,
-      });
-    }
-  };
+  // const toggleSavedStatusHandler = () => {
+  //   if (itemIsSaved) {
+  //     removePost(id);
+  //   } else {
+  //     addPost({
+  //       id,
+  //       title,
+  //       about,
+  //       employees,
+  //       type,
+  //       address,
+  //       company,
+  //       responsibilities,
+  //     });
+  //   }
+  // };
 
   return (
     <Box w="100%" borderWidth="1px" borderadius="lg" p="6">
@@ -70,9 +70,9 @@ function JobItem({ showTitle = true, post }: Props) {
       )}
 
       <Stack p={5} align="flex-end">
-        <Button variant="primary" onClick={toggleSavedStatusHandler}>
+        {/* <Button variant="primary" onClick={toggleSavedStatusHandler}>
           {itemIsSaved ? "Remove from MyList" : "Save in MyList"}
-        </Button>
+        </Button> */}
       </Stack>
     </Box>
   );

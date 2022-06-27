@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Badge, Button } from "@chakra-ui/react";
-
+import { useSelector } from "react-redux";
 import { UserData } from "../../type";
+import { ReducerType } from "../../reducer/index";
 
-import { SavedPostContext } from "../../store/SavePostContext";
+// import { SavedPostContext } from "../../store/SavePostContext";
 
 import styles from "./Header.module.scss";
 
@@ -15,8 +16,11 @@ function Header({ currentUser }: { currentUser: UserData | null }) {
     email: "",
     createdAt: new Date(),
   });
-  const jobContext = useContext(SavedPostContext);
-  const total = jobContext?.totalPost;
+  const stioredItems = useSelector(
+    (store: ReducerType) => store.savePostReducer
+  );
+  // const jobContext = useContext(SavedPostContext);
+  // const total = jobContext?.totalPost;
 
   useEffect(() => {
     setUser(currentUser);
@@ -47,7 +51,7 @@ function Header({ currentUser }: { currentUser: UserData | null }) {
       <Link to="/mylist" className={styles.Link}>
         My List
         <Badge colorScheme="purple" ml={2}>
-          {total}
+          {stioredItems.savedPost}
         </Badge>
       </Link>
     </div>

@@ -13,7 +13,6 @@ import { useController, RegisterOptions } from "react-hook-form";
 interface IFormNumberInput {
   control: any;
   name: string;
-  //   register: Omit<Partial<RegisterOptions>, "pattern">;
   rules?: Omit<RegisterOptions, "valueAsDate" | "setValueAs" | "disabled">;
 }
 function FormNumberInput({ control, name, rules }: IFormNumberInput) {

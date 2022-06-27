@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import {
   Accordion,
   AccordionItem,
@@ -9,19 +10,22 @@ import {
   Badge,
   Heading,
 } from "@chakra-ui/react";
-
+import { ReducerType } from "../../reducer/index";
 import JobItem from "../../components/JobItem";
 
-import { SavedPostContext } from "../../store/SavePostContext";
+// import { SavedPostContext } from "../../store/SavePostContext";
 
 import styles from "./MyList.module.scss";
 
 function MyList() {
-  const jobContext = useContext(SavedPostContext);
-  const jobPosts = jobContext?.savedPost;
-  const totalSaved = jobContext?.totalPost;
+  const storedItems = useSelector(
+    (store: ReducerType) => store.savePostReducer
+  );
+  // const jobContext = useContext(SavedPostContext);
+  // const jobPosts = jobContext?.savedPost;
+  // const totalSaved = jobContext?.totalPost;
 
-  if (totalSaved === 0) {
+  if (storedItems.savedPost.length === 0) {
     return (
       <div className={styles.NoPostSign}>
         <Heading as="h5" size="sm">

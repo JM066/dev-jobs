@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import "../src/styles/globals.scss";
 import App from "./App";
-import SavedPostProvider from "./store/SavePostContext";
+import store from "./store/index";
 import theme from "./theme";
 
 const Root = () => {
@@ -12,11 +14,11 @@ const Root = () => {
     <React.StrictMode>
       <ChakraProvider theme={theme}>
         <CSSReset />
-        <SavedPostProvider>
+        <Provider store={store}>
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </SavedPostProvider>
+        </Provider>
       </ChakraProvider>
     </React.StrictMode>
   );
