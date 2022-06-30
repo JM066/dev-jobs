@@ -11,7 +11,7 @@ import FormRadio from "../../components/Form/FormRadio";
 import FormSelect from "../../components/Form/FormSelect";
 import FormNumberInput from "../../components/Form/FormNumberInput";
 import { RADIO_OPTIONS, POSITIONS } from "../../const/index";
-import { JobPostBlock } from "../../type";
+import { JobPostState } from "../../type";
 
 function PostJobs() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,11 +31,11 @@ function PostJobs() {
     control,
     reset,
     formState: { errors },
-  } = useForm<JobPostBlock>({
+  } = useForm<JobPostState>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: JobPostBlock) => {
+  const onSubmit = async (data: JobPostState) => {
     setIsLoading(true);
     data.id = uuidV1();
     try {
@@ -103,7 +103,7 @@ function PostJobs() {
             />
             <TextEditor
               name="responsibilities"
-              control={control}         
+              control={control}
               placeholder="What are the requirements"
             />
             <Button variant="secondary" type="submit" isLoading={isLoading}>

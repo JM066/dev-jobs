@@ -1,5 +1,5 @@
-import { JobPostState } from "../../type";
-import { createSlice } from "@reduxjs/toolkit";
+import { JobPostState, JobPostBlock } from "../../type";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const initialState: ProviderState = {
   savedPost: [],
@@ -8,43 +8,7 @@ export const initialState: ProviderState = {
 export interface ProviderState {
   savedPost: JobPostState[];
   isLoading: boolean;
-
-  // addPost: (jobPost: JobPostState) => void;
-  // removePost: (jobId: string) => void;
-  // isItemSaved: (jobId: string) => boolean;
 }
-// interface Action {
-//   type: string;
-//   payload: Payload;
-// }
-// type Payload = {
-//   savedPost: JobPostState[];
-//   totalPost: number;
-// };
-// const savePostReducer = (state: ProviderState, action: Action) => {
-//   const { type, payload } = action;
-//   switch (type) {
-//     case "ADD_POST":
-//       console.log("ADD_POST", payload);
-//       return {
-//         ...state,
-//         savedPost: payload.savedPost,
-//         totalPost: payload.totalPost,
-//       };
-//     case "REMOVE_POST":
-//       console.log("REMOVE_POST", payload);
-//       return {
-//         ...state,
-//         savedPost: payload.savedPost,
-//         totalPost: payload.totalPost,
-//       };
-
-//     default:
-//       throw new Error(`No case for type ${type} found`);
-//   }
-// };
-
-// export default savePostReducer;
 export const savedPostSlice = createSlice({
   name: "saved",
   initialState,
@@ -52,24 +16,27 @@ export const savedPostSlice = createSlice({
     getSavedPostRequest: (state) => {
       state.isLoading = true;
     },
-    getSavedPostSuccess: (state, action) => {
+    getSavedPostSuccess: (state, action: PayloadAction<JobPostState[]>) => {
       state.savedPost = action.payload;
       state.isLoading = false;
     },
-    addPostRequest: (state) => {
+    addPostRequest: (state, action: PayloadAction<JobPostState>) => {
+      state.savedPost = state.savedPost.concat(action.payload);
       state.isLoading = true;
     },
-    addPostSuccess: (state, action) => {
-      state.savedPost = action.payload;
+    addPostSuccess: (state) => {
       state.isLoading = false;
     },
-    removePostRequest: (state) => {},
+    removePostRequest: (state, action: PayloadAction<string>) => {
+      const updatedSavedPost = state.savedPost.filter(
+        (post: JobPostState) => post.id !== action.payload
+      );
+      state.savedPost = updatedSavedPost;
+    },
     removePostSuccess: (state) => {},
   },
 });
 
 export const savedPosts = savedPostSlice.name;
-export const { getSavedPostRequest, getSavedPostSuccess, addPostRequest } =
-  savedPostSlice.actions;
-
+export const savedPostsActions = savedPostSlice.actions;
 export const savedPostsReducer = savedPostSlice.reducer;

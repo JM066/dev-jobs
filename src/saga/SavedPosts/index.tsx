@@ -3,13 +3,11 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
 import {
-  getSavedPostRequest,
-  getSavedPostSuccess,
-  // addPostRequest,
+  savedPostsActions,
+  savedPostsReducer,
 } from "src/reducer/SavePostSlice";
-interface ParamType {
-  jobPost: any[];
-}
+import { JobPostState } from "../../type";
+import { ProviderState } from "../../reducer/SavePostSlice";
 const config = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -26,15 +24,15 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 export const getSavedJobs = async () => {
-  const jobs: any = [];
+  const jobs: JobPostState[] = [];
   const jobRef = firestore.collection(`saved`);
   const snapShot = await jobRef.get();
   snapShot.forEach((doc) => {
-    jobs.push(doc.data());
+    jobs.push(doc.data() as JobPostState);
   });
   return jobs;
 };
-export const saveJobPost = async (jobPost: any) => {
+export const saveJobPost = async (jobPost: JobPostState) => {
   const jobRef = await firestore.collection(`saved`).add(jobPost);
 
   try {
@@ -45,32 +43,38 @@ export const saveJobPost = async (jobPost: any) => {
 };
 
 export function* handleGetSavedPostFetch() {
+  const { getSavedPostSuccess } = savedPostsActions;
   try {
-    const savedPost: string[] = yield call(getSavedJobs);
-    yield put(getSavedPostSuccess(savedPost));
+    const fetchedJobs: JobPostState[] = yield call(getSavedJobs);
+    yield put(getSavedPostSuccess(fetchedJobs));
   } catch {
     console.log("error");
   }
 }
-
-export function* getSavedPostSaga() {
+export interface IHttpResult {
+  success: boolean;
+  data: any;
+}
+export function* watchSavedPostSaga() {
+  const { getSavedPostRequest } = savedPostsActions;
   yield takeEvery(getSavedPostRequest, handleGetSavedPostFetch);
 }
 
-// export function* handleSavePost(action: { payload: ParamType }) {
-//   try {
-//     const savedPost: string[] = yield call(saveJobPost, action.payload,    'POST',
-//     'json',);
-//     yield put(getSavedPostSuccess(savedPost));
-//   } catch {
-//     console.log("error");
-//   }
-// }
-// export function* addPostSaga() {
-//   yield takeEvery(addPostRequest, handleSavePost);
-// }
+export function* handleSavePost(action: { payload: JobPostState }) {
+  const { addPostSuccess } = savedPostsActions;
+  try {
+    const savedPost: JobPostState[] = yield call(saveJobPost, action.payload);
+    yield put(addPostSuccess());
+  } catch {
+    console.log("error");
+  }
+}
+export function* watchAddPostSaga() {
+  const { addPostRequest } = savedPostsActions;
+  yield takeEvery(addPostRequest, handleSavePost);
+}
 export function* rootSaga() {
-  yield all([getSavedPostSaga() /*addPostSaga()*/]);
+  yield all([watchSavedPostSaga() /*addPostSaga()*/]);
 }
 // export default function* rootSaga() {
 //   yield all([

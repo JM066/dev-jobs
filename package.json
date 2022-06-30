@@ -8,6 +8,7 @@
     "@draft-js-modules/editor": "^0.1.0",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11",
+    "@google-cloud/firestore": "^5.0.2",
     "@hookform/resolvers": "^2.8.8",
     "@react-native-firebase/auth": "^13.0.1",
     "@reduxjs/toolkit": "^1.8.2",
