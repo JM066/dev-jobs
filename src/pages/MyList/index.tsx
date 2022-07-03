@@ -1,5 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { savedPostsActions } from "../../reducer/SavePostSlice";
 import {
   Accordion,
   AccordionItem,
@@ -12,21 +13,22 @@ import {
 } from "@chakra-ui/react";
 import { ReducerType } from "../../reducer/index";
 import JobItem from "../../components/JobItem";
-
-// import { SavedPostContext } from "../../store/SavePostContext";
-
 import styles from "./MyList.module.scss";
 
 function MyList() {
-  const storedItems = useSelector(
-    (store: ReducerType) => store.savePostReducer
+  const dispatch = useDispatch();
+  const { getSavedPostRequest } = savedPostsActions;
+  dispatch(getSavedPostRequest());
+  const storedJobs = useSelector(
+    (store: ReducerType) => store.savePostReducer.savedPost
   );
 
-  // const jobContext = useContext(SavedPostContext);
-  // const jobPosts = jobContext?.savedPost;
-  // const totalSaved = jobContext?.totalPost;
+  // useEffect(() => {
+  //   const { getSavedPostRequest } = savedPostsActions;
+  //   dispatch(getSavedPostRequest());
+  // }, []);
 
-  if (storedItems.savedPost.length === 0) {
+  if (storedJobs.length === 0) {
     return (
       <div className={styles.NoPostSign}>
         <Heading as="h5" size="sm">
@@ -41,7 +43,7 @@ function MyList() {
         My Job List
       </Heading>
 
-      {storedItems?.savedPost.map((job) => (
+      {storedJobs.map((job) => (
         <Accordion key={job.id} m={2} allowMultiple>
           <AccordionItem>
             {/* <h2> */}

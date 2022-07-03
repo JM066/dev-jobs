@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { savedPostsActions } from "../../reducer/SavePostSlice";
 // import { convertFromRaw, EditorState, Editor } from "draft-js";
 import {
   Stack,
@@ -6,7 +8,7 @@ import {
   Divider,
   Heading,
   Badge,
-  // Button,
+  Button,
   Box,
 } from "@chakra-ui/react";
 import EditorItem from "../../components/TextEditor/EditorItem";
@@ -19,36 +21,31 @@ interface Props {
 }
 
 function JobItem({ showTitle = true, post }: Props) {
-  const {
-    // id,
-    title,
-    about,
-    // employees,
-    // type,
-    address,
-    company,
-    responsibilities,
-  } = post;
-
+  const { title, about, employees, type, address, company, responsibilities } =
+    post;
+  const dispatch = useDispatch();
   // const { isItemSaved, removePost, addPost } = useContext(SavedPostContext);
   // const itemIsSaved = isItemSaved(id);
 
-  // const toggleSavedStatusHandler = () => {
-  //   if (itemIsSaved) {
-  //     removePost(id);
-  //   } else {
-  //     addPost({
-  //       id,
-  //       title,
-  //       about,
-  //       employees,
-  //       type,
-  //       address,
-  //       company,
-  //       responsibilities,
-  //     });
-  //   }
-  // };
+  const toggleSavedStatusHandler = () => {
+    // if (itemIsSaved) {
+    //   removePost(id);
+    // } else {
+    const { addPostRequest } = savedPostsActions;
+    dispatch(
+      addPostRequest({
+        title,
+        about,
+        employees,
+        type,
+        address,
+        company,
+        responsibilities,
+      })
+    );
+
+    // }
+  };
 
   return (
     <Box w="100%" borderWidth="1px" borderadius="lg" p="6">
@@ -70,9 +67,9 @@ function JobItem({ showTitle = true, post }: Props) {
       )}
 
       <Stack p={5} align="flex-end">
-        {/* <Button variant="primary" onClick={toggleSavedStatusHandler}>
-          {itemIsSaved ? "Remove from MyList" : "Save in MyList"}
-        </Button> */}
+        <Button variant="primary" onClick={toggleSavedStatusHandler}>
+          {/* {itemIsSaved ? "Remove from MyList" : "Save in MyList"} */}
+        </Button>
       </Stack>
     </Box>
   );

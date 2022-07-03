@@ -21,20 +21,13 @@ export const savedPostSlice = createSlice({
       state.isLoading = false;
     },
     addPostRequest: (state, action) => {
-      console.log("action", action);
+      state.savedPost = [...state.savedPost];
       state.isLoading = true;
     },
     addPostSuccess: (state, action) => {
       state.savedPost = action.payload;
       state.isLoading = false;
     },
-    // removePostRequest: (state, action: PayloadAction<string>) => {
-    //   const updatedSavedPost = state.savedPost.filter(
-    //     (post: JobPostState) => post.id !== action.payload
-    //   );
-    //   state.savedPost = updatedSavedPost;
-    // },
-    // removePostSuccess: (state) => {},
   },
 });
 

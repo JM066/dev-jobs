@@ -20,13 +20,14 @@ function FindJobs() {
         setJobs(jobList);
         setFilteredJobs(jobList);
         setJobSelected(jobList[0]);
+        console.log("jobs", jobs);
       } catch (error) {
         console.log(error);
       }
     }
     fetchJobs();
   }, []);
-  
+
   useEffect(() => {
     setPostDetail(jobSelected);
   }, [jobSelected]);
