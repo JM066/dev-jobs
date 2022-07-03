@@ -48,7 +48,24 @@ export const getAllJobs = async () => {
   });
   return jobs;
 };
+export const getSavedJobs = async () => {
+  const jobs = [];
+  const jobRef = firestore.collection(`saved`);
+  const snapShot = await jobRef.get();
+  snapShot.forEach((doc) => {
+    jobs.push(doc.data());
+  });
+  return jobs;
+};
+export const saveJobPost = async (jobPost) => {
+  const jobRef = await firestore.collection(`saved`).add(jobPost);
 
+  try {
+    await jobRef.set(jobPost);
+  } catch (err) {
+    console.log("error occured while fetching");
+  }
+};
 export const getJobsByPosition = async (positions) => {
   const jobs = [];
   const jobRef = firestore.collection(`jobs`);

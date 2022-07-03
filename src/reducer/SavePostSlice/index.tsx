@@ -1,5 +1,5 @@
-import { JobPostState, JobPostBlock } from "../../type";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { JobPostState } from "../../type";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState: ProviderState = {
   savedPost: [],
@@ -16,24 +16,25 @@ export const savedPostSlice = createSlice({
     getSavedPostRequest: (state) => {
       state.isLoading = true;
     },
-    getSavedPostSuccess: (state, action: PayloadAction<JobPostState[]>) => {
+    getSavedPostSuccess: (state, action) => {
       state.savedPost = action.payload;
       state.isLoading = false;
     },
-    addPostRequest: (state, action: PayloadAction<JobPostState>) => {
-      state.savedPost = state.savedPost.concat(action.payload);
+    addPostRequest: (state, action) => {
+      console.log("action", action);
       state.isLoading = true;
     },
-    addPostSuccess: (state) => {
+    addPostSuccess: (state, action) => {
+      state.savedPost = action.payload;
       state.isLoading = false;
     },
-    removePostRequest: (state, action: PayloadAction<string>) => {
-      const updatedSavedPost = state.savedPost.filter(
-        (post: JobPostState) => post.id !== action.payload
-      );
-      state.savedPost = updatedSavedPost;
-    },
-    removePostSuccess: (state) => {},
+    // removePostRequest: (state, action: PayloadAction<string>) => {
+    //   const updatedSavedPost = state.savedPost.filter(
+    //     (post: JobPostState) => post.id !== action.payload
+    //   );
+    //   state.savedPost = updatedSavedPost;
+    // },
+    // removePostSuccess: (state) => {},
   },
 });
 

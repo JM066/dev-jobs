@@ -21,6 +21,7 @@ function MyList() {
   const storedItems = useSelector(
     (store: ReducerType) => store.savePostReducer
   );
+
   // const jobContext = useContext(SavedPostContext);
   // const jobPosts = jobContext?.savedPost;
   // const totalSaved = jobContext?.totalPost;
@@ -40,7 +41,7 @@ function MyList() {
         My Job List
       </Heading>
 
-      {jobPosts.map((job) => (
+      {storedItems?.savedPost.map((job) => (
         <Accordion key={job.id} m={2} allowMultiple>
           <AccordionItem>
             {/* <h2> */}
