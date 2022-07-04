@@ -1,6 +1,6 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { savedPostsActions } from "../../reducer/SavePostSlice";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+// import {  } from "src/reducer/SavePostSlice";
 import {
   Accordion,
   AccordionItem,
@@ -16,17 +16,18 @@ import JobItem from "../../components/JobItem";
 import styles from "./MyList.module.scss";
 
 function MyList() {
-  const dispatch = useDispatch();
-  const { getSavedPostRequest } = savedPostsActions;
-  dispatch(getSavedPostRequest());
+  // const dispatch = useDispatch();
+
+  // const { getSavedPostRequest } = savedPostsActions;
+
   const storedJobs = useSelector(
     (store: ReducerType) => store.savePostReducer.savedPost
   );
 
-  // useEffect(() => {
-  //   const { getSavedPostRequest } = savedPostsActions;
-  //   dispatch(getSavedPostRequest());
-  // }, []);
+  useEffect(() => {
+    // dispatch(getSavedPostRequest());
+    console.log("stored", storedJobs);
+  }, [storedJobs]);
 
   if (storedJobs.length === 0) {
     return (
@@ -43,8 +44,8 @@ function MyList() {
         My Job List
       </Heading>
 
-      {storedJobs.map((job) => (
-        <Accordion key={job.id} m={2} allowMultiple>
+      {storedJobs.map((job: any, i: number) => (
+        <Accordion key={i} m={2} allowMultiple>
           <AccordionItem>
             {/* <h2> */}
             <AccordionButton>

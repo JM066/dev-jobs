@@ -21,19 +21,17 @@ interface Props {
 }
 
 function JobItem({ showTitle = true, post }: Props) {
-  const { title, about, employees, type, address, company, responsibilities } =
+  const { title, about, address, employees, type, company, responsibilities } =
     post;
   const dispatch = useDispatch();
-  // const { isItemSaved, removePost, addPost } = useContext(SavedPostContext);
-  // const itemIsSaved = isItemSaved(id);
 
   const toggleSavedStatusHandler = () => {
     // if (itemIsSaved) {
     //   removePost(id);
     // } else {
-    const { addPostRequest } = savedPostsActions;
+    const { addSavedPostSuccess } = savedPostsActions;
     dispatch(
-      addPostRequest({
+      addSavedPostSuccess({
         title,
         about,
         employees,

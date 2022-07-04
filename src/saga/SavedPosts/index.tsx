@@ -7,37 +7,33 @@ export function* handleGetSavedPostFetch() {
   const { getSavedPostSuccess } = savedPostsActions;
   try {
     const fetchedJobs: JobPostState[] = yield call(getSavedJobs);
-    console.log("does it arrive?");
+    console.log("fetch jobs", fetchedJobs);
     yield put(getSavedPostSuccess(fetchedJobs));
-  } catch {
-    console.log("error");
+  } catch (error) {
+    console.log("Eee", error);
   }
 }
-export interface IHttpResult {
-  success: boolean;
-  data: any;
-}
+
 export function* watchSavedPostSaga() {
   const { getSavedPostRequest } = savedPostsActions;
   yield takeEvery(getSavedPostRequest, handleGetSavedPostFetch);
 }
 
-export function* handleSavePost(action: { payload: JobPostState }) {
-  const { addPostSuccess } = savedPostsActions;
+export function* handleAddJobPost(action: { payload: JobPostState }) {
+  const { getSavedPostRequest } = savedPostsActions;
   try {
-    const savedPost: JobPostState[] = yield call(saveJobPost, action.payload);
-    console.log("savedPost", savedPost);
-    yield put(addPostSuccess(savedPost));
-  } catch {
-    console.log("error");
+    yield call(saveJobPost, action.payload);
+    yield put(getSavedPostRequest());
+  } catch (error) {
+    console.log(error);
   }
 }
-export function* watchAddPostSaga() {
-  const { addPostRequest } = savedPostsActions;
-  yield takeEvery(addPostRequest, handleSavePost);
+export function* watchAddJobPost() {
+  const { addSavedPostSuccess } = savedPostsActions;
+  yield takeEvery(addSavedPostSuccess, handleAddJobPost);
 }
 export function* rootSaga() {
-  yield all([watchSavedPostSaga(), watchAddPostSaga()]);
+  yield all([watchAddJobPost(), watchSavedPostSaga()]);
 }
 // export default function* rootSaga() {
 //   yield all([

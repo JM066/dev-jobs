@@ -13,18 +13,13 @@ export const savedPostSlice = createSlice({
   name: "saved",
   initialState,
   reducers: {
+    addSavedPostSuccess: (state, _action) => {
+      state.isLoading = false;
+    },
     getSavedPostRequest: (state) => {
       state.isLoading = true;
     },
     getSavedPostSuccess: (state, action) => {
-      state.savedPost = action.payload;
-      state.isLoading = false;
-    },
-    addPostRequest: (state, action) => {
-      state.savedPost = [...state.savedPost];
-      state.isLoading = true;
-    },
-    addPostSuccess: (state, action) => {
       state.savedPost = action.payload;
       state.isLoading = false;
     },
