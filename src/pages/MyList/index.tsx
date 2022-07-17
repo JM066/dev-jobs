@@ -39,7 +39,6 @@ function MyList() {
       {jobPosts.map((job) => (
         <Accordion key={job.id} m={2} allowMultiple>
           <AccordionItem>
-            {/* <h2> */}
             <AccordionButton>
               <Box flex="1" textAlign="left">
                 {job.company?.toUpperCase()}
@@ -49,7 +48,6 @@ function MyList() {
               </Box>
               <AccordionIcon />
             </AccordionButton>
-            {/* </h2> */}
             <AccordionPanel pb={4}>
               <JobItem post={job} showTitle={false} />
             </AccordionPanel>

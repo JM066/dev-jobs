@@ -1,29 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FormControl } from "@chakra-ui/react";
 import { useController } from "react-hook-form";
-// import draftToHtml from "draftjs-to-html";
-import {
-  Editor,
-  EditorState,
-  RichUtils,
-  // DraftModel,
-  convertToRaw,
-} from "draft-js";
+
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import InlineStyleControls from "./InlineStyleControls";
 interface ITextEditor {
   placeholder: string;
-  // register: Omit<Partial<RegisterOptions>, "pattern">;
   control: any;
   name: string;
-  // saveData: (content: DraftModel.ImmutableData.ContentState) => void;
 }
-function TextEditor({
-  placeholder,
-  name,
-  // register,
-  control,
-  // saveData,
-}: ITextEditor) {
+function TextEditor({ placeholder, name, control }: ITextEditor) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editor, setEditor] = React.useState<Editor | null>(null);
   const { field } = useController({
@@ -48,7 +34,7 @@ function TextEditor({
   };
   const handleEditorState = (editorState: EditorState) => {
     const contentState = editorState.getCurrentContent();
-    // console.log("content", convertToRaw(contentState));
+
     field.onChange(convertToRaw(contentState));
     setEditorState(editorState);
   };
